@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Image un-embiggenning</h1>
+        <h1>Image Un-Embiggener</h1>
         <p>Choose a folder from the file/open menu</p>
 
         <p>{ this.state.fileContent }</p>
