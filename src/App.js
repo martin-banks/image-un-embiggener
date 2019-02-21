@@ -9,12 +9,18 @@ class App extends Component {
     super()
 
     this.state = {
-      fileContent: null
+      fileContent: null,
+      fileList: ''
     }
 
     ipcRenderer.on('new-file', (e, content) => {
       console.log({ content })
       this.setState({ fileContent: content })
+    })
+
+    ipcRenderer.on('file-list', (e, content) => {
+      console.log({ content })
+      this.setState({ fileList: content })
     })
   }
 
@@ -27,6 +33,9 @@ class App extends Component {
         <p>Choose a folder from the file/open menu</p>
 
         <p>{ this.state.fileContent }</p>
+        <pre>{
+          JSON.stringify(this.state.fileList.split(','), 'utf8', 2)
+        }</pre>
       </div>
     )
   }
@@ -47,13 +56,13 @@ const Draggable = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  /* background: rgba(0,0,0, 0.2); */
+  background: rgba(0,0,0, 0.2);
   width: 100vw;
   height: 40px;
   z-index: 10000;
-  -webkit-app-region: drag;
+  /* -webkit-app-region: drag;
   -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px) brightness(60%);
+  backdrop-filter: blur(3px) brightness(60%); */
 `
 
 

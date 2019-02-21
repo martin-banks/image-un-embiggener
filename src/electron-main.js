@@ -9,7 +9,7 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1000,
+    width: 400,
     height: 600,
     webPreferences: {
       nodeIntegration: true,
@@ -52,10 +52,17 @@ function createWindow () {
       label: 'File',
       submenu: [
         {
-          label: 'Open File',
+          label: 'Open Files',
           accelerator: 'CmdOrCtrl+O',
           click () {
             openFile()
+          },
+        },
+        {
+          label: 'Choose Folder',
+          accelerator: 'CmdOrCtrl+Shift+O',
+          click () {
+            openFolder()
           },
         },
       ]
@@ -173,9 +180,24 @@ function openFile () {
   setTimeout(() => {
     mainWindow.webContents.send('new-file', 'Blah')
   }, 3000)
-
 }
 
+
+function openFolder () {
+  const folder = dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory'],
+  })[0]
+
+  if (!folder) return
+  
+  const fileList = fs
+    .readdirSync(folder)
+    .toString()
+  console.log({ folder })
+  console.log({ fileList })
+
+  mainWindow.webContents.send('file-list', fileList)
+}
 
 
 
