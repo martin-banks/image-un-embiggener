@@ -10,7 +10,7 @@ class App extends Component {
 
     this.state = {
       fileContent: null,
-      fileList: ''
+      foundImages: {},
     }
 
     ipcRenderer.on('new-file', (e, content) => {
@@ -18,9 +18,9 @@ class App extends Component {
       this.setState({ fileContent: content })
     })
 
-    ipcRenderer.on('file-list', (e, content) => {
+    ipcRenderer.on('found-images', (e, content) => {
       console.log({ content })
-      this.setState({ fileList: content })
+      this.setState({ foundImages: content })
     })
   }
 
@@ -34,7 +34,7 @@ class App extends Component {
 
         <p>{ this.state.fileContent }</p>
         <pre>{
-          JSON.stringify(this.state.fileList.split(','), 'utf8', 2)
+          JSON.stringify(this.state.foundImages, 'utf8', 2)
         }</pre>
       </div>
     )
@@ -60,9 +60,6 @@ const Draggable = styled.div`
   width: 100vw;
   height: 40px;
   z-index: 10000;
-  /* -webkit-app-region: drag;
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px) brightness(60%); */
 `
 
 

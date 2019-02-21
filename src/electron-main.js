@@ -9,7 +9,7 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 400,
+    width: 600,
     height: 600,
     webPreferences: {
       nodeIntegration: true,
@@ -189,14 +189,21 @@ function openFolder () {
   })[0]
 
   if (!folder) return
-  
+  console.log({ folder })
+
   const fileList = fs
     .readdirSync(folder)
     .toString()
-  console.log({ folder })
-  console.log({ fileList })
+    .split(',')
 
-  mainWindow.webContents.send('file-list', fileList)
+  const images = {
+    jpg: fileList.filter(f => f.match(/.jpe?g/)),
+    png: fileList.filter(f => f.match(/.png/)),
+    gif: fileList.filter(f => f.match(/.gif/)),
+  }
+  console.log({ images })
+
+  mainWindow.webContents.send('found-images', images)
 }
 
 
