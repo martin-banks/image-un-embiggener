@@ -2,6 +2,8 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron')
 const fs = require('fs')
 
+const processing = require('./processing')
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -191,10 +193,35 @@ function openFolder () {
   if (!folder) return
   console.log({ folder })
 
+  
   const fileList = fs
     .readdirSync(folder)
     .toString()
     .split(',')
+    .filter(f => f.match(/.jpe?g/))
+
+
+  // Create folder structure based on output model
+  // Create a reference to the original folder set
+  // For each directory in any given model;
+    // ! itterate over all RAW image files and create...
+        // * for each model
+          // * Directries for each context
+            // * RAW context images
+            // * Compressed context iamges
+
+  // ! itterate over version in the chosen model
+
+  // ! or something
+  /* 
+    for (context of model.contexts) {
+      processing(filelist: null, path: `${folder}/${model.context}`)
+    }
+  */
+
+  processing({ fileList, path: folder })
+
+
 
   const images = {
     jpg: fileList.filter(f => f.match(/.jpe?g/)),
