@@ -1,8 +1,10 @@
 const imagemin = require('imagemin')
 const imageminJpegTran = require('imagemin-jpegtran')
 const imageminPngquant = require('imagemin-pngquant')
-
 const Jimp = require('jimp')
+
+const model = require('../image-models/carousel')
+
 
 // * Requirements
 // - model to use
@@ -10,23 +12,26 @@ const Jimp = require('jimp')
 
 const state = {
   output: null,
-  model: null,
+  model: require('../image-models/carousel'),
   path: null,
   file: null,
 }
 
-function resize ({ path, file } = {}) {
+console.log(JSON.stringify(state, 'utf8', 2))
+
+function resize ({ path, file, crop } = {}) {
   console.log({ path, file })
   return new Promise((resolve, reject) => {
     Jimp.read(`${path}/${file}`, (err, image) => {
       if (err) reject(err)
       if (!image) reject(`${image} is not supported`)
       console.log({ image })
-      const dest = `${path}/resize/${file}`
+      const newFilename = file.replace(/.jpg/i, `${crop.suffix}.jpg`)
+      const dest = `${path}/${crop.context}${crop.suffix}/${newFilename}`
       console.log({ dest })
       image
-        .resize(500, Jimp.AUTO)
-        .quality(20)
+        .resize(crop.width, Jimp.AUTO)
+        .quality(crop.quality.jpg)
         .write(dest)
 
       resolve(`${file} done`)
@@ -36,11 +41,12 @@ function resize ({ path, file } = {}) {
 
 function formatting ({ fileList, path } = {}) {
   return new Promise (async (resolve, reject) => {
-    for (file of fileList) {
+    for (const file of fileList) {
       console.log('formatting', file, path)
-      await resize({ path, file })
+      for (const crop of model.crops) {
+        await resize({ path, file, crop })
+      }
     }
-    console.log('All files done')
     resolve()
   })
 }
@@ -63,6 +69,7 @@ function compressing ({ path } = {}) {
         ]
       }
     )
+    resolve()
 
     console.log({ processed })
   })
@@ -70,11 +77,14 @@ function compressing ({ path } = {}) {
 
 
 async function processing ({ fileList, path } = {}) {
+  console.log({ path })
   console.log({ fileList })
   try {
     await formatting({ fileList, path })
+    console.log('\n-------------\nall formatting done\n-------------\n')
     await compressing({ path: `${path}/resize` })
-    console.log('all done')
+    console.log('\n-------------\nall compressing done\n-------------\n')
+    console.log('\n-------------\neol\n-------------\n')
   } catch (error) {
     throw error
   }

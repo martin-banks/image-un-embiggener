@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       fileContent: null,
       foundImages: {},
+      status: 'Innactive'
     }
 
     ipcRenderer.on('new-file', (e, content) => {
@@ -21,6 +22,10 @@ class App extends Component {
     ipcRenderer.on('found-images', (e, content) => {
       console.log({ content })
       this.setState({ foundImages: content })
+    })
+
+    ipcRenderer.on('status', (e, content) => {
+      this.setState({ status: content })
     })
   }
 
@@ -33,6 +38,8 @@ class App extends Component {
         <p>Choose a folder from the file/open menu</p>
 
         <p>{ this.state.fileContent }</p>
+        <p>{ this.state.status }</p>
+
         <pre>{
           JSON.stringify(this.state.foundImages, 'utf8', 2)
         }</pre>

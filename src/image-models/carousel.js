@@ -94,7 +94,7 @@ const report = {
   ratio: true,
 }
 
-export default {
+module.exports = {
   crops,
   report,
 }

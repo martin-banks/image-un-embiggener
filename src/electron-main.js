@@ -3,6 +3,8 @@ const { app, BrowserWindow, Menu, dialog } = require('electron')
 const fs = require('fs')
 
 const processing = require('./processing')
+const createDirs = require('./processing/create-directories')
+const model = require('./image-models/carousel')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -185,7 +187,7 @@ function openFile () {
 }
 
 
-function openFolder () {
+async function openFolder () {
   const folder = dialog.showOpenDialog(mainWindow, {
     properties: ['openDirectory'],
   })[0]
@@ -218,19 +220,30 @@ function openFolder () {
       processing(filelist: null, path: `${folder}/${model.context}`)
     }
   */
+ const images = {
+   jpg: fileList.filter(f => f.match(/.jpe?g/)),
+   png: fileList.filter(f => f.match(/.png/)),
+   gif: fileList.filter(f => f.match(/.gif/)),
+ }
+ console.log({ images })
+ mainWindow.webContents.send('found-images', images)
+ mainWindow.webContents.send('status', 'Processing...')
+ 
+  try {
+    await createDirs({ model, folder })
+    await processing({ fileList, path: folder })
+    mainWindow.webContents.send('status', 'Processing complete')
 
-  processing({ fileList, path: folder })
+    setTimeout(() => {
+      mainWindow.webContents.send('status', 'Innactive')
+      mainWindow.webContents.send('found-images', {})
+    }, 5000)
 
+  } catch (err) {
+    mainWindow.webContents.send('status', `---ERROR---\n${err}`)
+   throw err
+ }
 
-
-  const images = {
-    jpg: fileList.filter(f => f.match(/.jpe?g/)),
-    png: fileList.filter(f => f.match(/.png/)),
-    gif: fileList.filter(f => f.match(/.gif/)),
-  }
-  console.log({ images })
-
-  mainWindow.webContents.send('found-images', images)
 }
 
 
