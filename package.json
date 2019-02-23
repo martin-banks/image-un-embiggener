@@ -8,6 +8,7 @@
     "imagemin-jpegtran": "^6.0.0",
     "imagemin-pngquant": "^7.0.0",
     "jimp": "^0.6.0",
+    "mkdirp": "^0.5.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5",
