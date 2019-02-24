@@ -8,9 +8,10 @@ const crops = [
     width: 320,
     suffix: '@1x',
     blur: 0,
+    dither: 100,
     sharpen: 0,
     quality: {
-      jpg: 40,
+      jpg: 30,
     },
   },
   {
@@ -22,6 +23,7 @@ const crops = [
     width: 640,
     suffix: '@2x',
     blur: 0,
+    dither: 100,
     sharpen: 0,
     quality: {
       jpg: 30,
@@ -37,9 +39,10 @@ const crops = [
     width: 650,
     suffix: '@1x',
     blur: 0,
+    dither: 100,
     sharpen: 0,
     quality: {
-      jpg: 40,
+      jpg: 30,
     },
   },
   {
@@ -51,6 +54,7 @@ const crops = [
     width: 1300,
     suffix: '@2x',
     blur: 0,
+    dither: 100,
     sharpen: 0,
     quality: {
       jpg: 30,
@@ -65,7 +69,9 @@ const crops = [
     },
     width: 20,
     suffix: '@blur',
+    dither: 100,
     blur: 3,
+    dither: 100,
     sharpen: 0,
     quality: {
       jpg: 20,
@@ -81,6 +87,7 @@ const crops = [
     width: 50,
     suffix: '@50',
     blur: 0,
+    dither: 100,
     sharpen: 0,
     quality: {
       jpg: 50,
