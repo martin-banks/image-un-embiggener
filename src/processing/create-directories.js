@@ -4,16 +4,7 @@ const mkdirp = require('mkdirp')
 
 function createDirectoies ({ model, folder }) {
   return new Promise ((resolve, reject) => {
-    // const dirname = file
-    //   .toLowerCase()
-    //   .replace(/\s+/gi, '-')
-    // const parent = `${folder}/${dirname}`
     const raw = `${folder}/_RAW`
-    // mkdirp.sync(parent, err => {
-    //   if (err) throw err
-    //   console.log(parent)
-    // })
-  
     mkdirp.sync(raw, err => {
       if (err) {
         reject(err)
