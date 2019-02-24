@@ -4,8 +4,11 @@
   "private": true,
   "dependencies": {
     "electron": "^4.0.5",
+    "electron-react-devtools": "^0.5.3",
     "imagemin": "^6.1.0",
+    "imagemin-jpegoptim": "^6.0.0",
     "imagemin-jpegtran": "^6.0.0",
+    "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^7.0.0",
     "jimp": "^0.6.0",
     "mkdirp": "^0.5.1",
