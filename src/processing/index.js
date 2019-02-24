@@ -1,9 +1,11 @@
 const imagemin = require('imagemin')
 const imageminJpegTran = require('imagemin-jpegtran')
+const imageminJpegoptim = require('imagemin-jpegoptim')
 const imageminPngquant = require('imagemin-pngquant')
+const imageminMozjpeg = require('imagemin-mozjpeg')
 const Jimp = require('jimp')
 
-const model = require('../image-models/carousel')
+// const model = require('../image-models/carousel')
 
 
 // * Requirements
@@ -12,38 +14,43 @@ const model = require('../image-models/carousel')
 
 const state = {
   output: null,
-  model: require('../image-models/carousel'),
+  model: null,
   path: null,
   file: null,
 }
 
 console.log(JSON.stringify(state, 'utf8', 2))
 
-function resize ({ path, file, crop } = {}) {
+function resize ({ path, file, crop, mainWindow } = {}) {
   console.log({ path, file })
   return new Promise((resolve, reject) => {
     Jimp.read(`${path}/${file}`, (err, image) => {
       if (err) reject(err)
       if (!image) reject(`${image} is not supported`)
       console.log({ image })
-      const newFilename = file.replace(/.jpg/i, `${crop.suffix}.jpg`)
-      const dest = `${path}/${crop.context}${crop.suffix}/${newFilename}`
-      console.log({ dest })
-      image
-        .resize(crop.width, Jimp.AUTO)
-        .quality(crop.quality.jpg)
-        .write(dest)
+      const newFilename = file.replace(/.jpe?g|.png/i, `${crop.suffix}`)
+      const destJPG = `${path}/${crop.context}${crop.suffix}/${newFilename}.jpg`
+      const destPNG = `${path}/${crop.context}${crop.suffix}/${newFilename}.png`
+      console.log({ destJPG, destPNG })
+      image.resize(crop.width, Jimp.AUTO)
+      image.quality(crop.quality.jpg)
+      crop.blur && image.blur(crop.blur)
+      image.write(destJPG)
+      image.write(destPNG)
 
       resolve(`${file} done`)
     })
+
   })
 }
 
-function formatting ({ fileList, path } = {}) {
+function formatting ({ fileList, path, mainWindow } = {}) {
   return new Promise (async (resolve, reject) => {
     for (const file of fileList) {
       console.log('formatting', file, path)
-      for (const crop of model.crops) {
+      mainWindow.webContents.send('log', `Formatting: ${path}/${file}`)
+      for (const crop of state.model.crops) {
+        mainWindow.webContents.send('log', `Crop: ${crop.context}${crop.suffix}`)
         await resize({ path, file, crop })
       }
     }
@@ -52,39 +59,56 @@ function formatting ({ fileList, path } = {}) {
 }
 
 
-function compressing ({ path } = {}) {
-  console.log('starting compression:', path)
-  const target = `${path}/*.{jpg,png}`
-  console.log({ target })
-  const output = `${path}/optim`
-  console.log({ output })
+function compressing ({ path, mainWindow } = {}) {
   return new Promise (async (resolve, reject) => {
-    const processed = await imagemin(
-      [ target ],
-      output,
-      {
-        plugins: [
-          imageminJpegTran({ quality: 10 }),
-          imageminPngquant()
-        ]
-      }
-    )
+    for (const crop of state.model.crops) {
+      console.log({ crop })
+      console.log('starting compression:', path)
+      const target = `${path}/${crop.context}${crop.suffix}/*.{jpg,png}`
+      mainWindow.webContents.send('log', `Compressing: ${target}`)
+      console.log({ target })
+      const output = `${path}/${crop.context}${crop.suffix}/optim`
+      console.log({ output })
+      // return new Promise (async (resolve, reject) => {
+        const processed = await imagemin(
+          [ target ],
+          output,
+          {
+            plugins: [
+              imageminJpegoptim({
+                max: 40,
+                stripAll: true,
+              }),
+              imageminJpegTran(),
+              imageminMozjpeg(),
+              imageminPngquant({
+                strip: true,
+                quality: [0.3, 0.5],
+                dithering: 0.3,
+              })
+            ]
+          }
+        )
+        // resolve()
+        console.log({ processed })
+      // })
+    }
     resolve()
-
-    console.log({ processed })
   })
 }
 
 
-async function processing ({ fileList, path } = {}) {
+async function processing ({ fileList, path, mainWindow, model } = {}) {
+  state.model = model
   console.log({ path })
   console.log({ fileList })
   try {
-    await formatting({ fileList, path })
+    await formatting({ fileList, path, mainWindow })
     console.log('\n-------------\nall formatting done\n-------------\n')
-    await compressing({ path: `${path}/resize` })
+    await compressing({ path: `${path}`, mainWindow })
     console.log('\n-------------\nall compressing done\n-------------\n')
     console.log('\n-------------\neol\n-------------\n')
+    mainWindow.webContents.send('log', `--- All files complete ---`)
   } catch (error) {
     throw error
   }
