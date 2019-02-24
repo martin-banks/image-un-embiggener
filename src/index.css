@@ -1,3 +1,8 @@
+html, body {
+  font-size: 8px;
+
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -7,7 +12,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 8px;
   background: #333;
   color: white;
   -webkit-app-region: drag;
@@ -15,33 +19,38 @@ body {
 
 
 h1 {
-  font-size: 3rem;
+  font-size: 5rem;
   margin: 0;
   margin-bottom: 2rem
 }
 h2 {
+  font-size: 3rem;
   margin: 0;
   margin-bottom: 2rem
 }
 h3 {
+  font-size: 3rem;
   margin: 0;
   margin-bottom: 2rem
 }
 h4 {
+  font-size: 3rem;
   margin: 0;
   margin-bottom: 2rem
 }
 h5 {
+  font-size: 3rem;
   margin: 0;
   margin-bottom: 2rem
 }
 h6 {
+  font-size: 3rem;
   margin: 0;
   margin-bottom: 2rem
 }
 
 p {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 span {
@@ -57,17 +66,41 @@ li {
 }
 
 button {
+  transition: all 200ms;
   background: none;
-  padding: 0.5rem 3rem;
-  border: solid 1px #333;
+  padding: 2rem 3rem;
+  border: solid 1px #222;
+  background: rgba(0,0,0, 0.2);
+  color: white;
   border-radius: 50px;
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1.5rem;
   cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  color: gold;
+  background: rgba(0,0,0, 0.6);
+}
+
+button:focus {
+  border: solid 1px rgba(200,200, 0, 0.5);
 }
 
 pre {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgba(0,0,0, 0.2);
+  padding: 20px;
+  color: #bada55;
+  overflow: auto;
+  border-radius: 8px
+}
+
+hr {
+  padding: 0;
+  margin: 6rem 0;
 }
 
 
