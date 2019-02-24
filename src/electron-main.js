@@ -1,10 +1,14 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
 const fs = require('fs')
 
 const processing = require('./processing')
 const createDirs = require('./processing/create-directories')
-const model = require('./image-models/carousel')
+
+const models = {
+  demo: require('./image-models/demo')
+
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -25,6 +29,11 @@ function createWindow () {
   // and load the index.html of the app.
   // mainWindow.loadFile('index.html')
   mainWindow.loadURL('http://localhost:3000')
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('models', models)
+  })
+
 
   const menuTemplate = [
     {
@@ -156,6 +165,8 @@ app.on('activate', function () {
   }
 })
 
+
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
@@ -195,43 +206,71 @@ async function openFolder () {
   if (!folder) return
   console.log({ folder })
 
-  
-  const fileList = fs
-    .readdirSync(folder)
-    .toString()
-    .split(',')
-    .filter(f => f.match(/.jpe?g/))
+  // const fileList = fs
+  //   .readdirSync(folder)
+  //   .toString()
+  //   .split(',')
+  //   .filter(f => f.match(/.jpe?g/))
+
+  // const images = {
+  //   jpg: fileList.filter(f => f.match(/.jpe?g/)),
+  //   png: fileList.filter(f => f.match(/.png/)),
+  //   gif: fileList.filter(f => f.match(/.gif/)),
+  // }
+  // console.log({ images })
+  mainWindow.webContents.send('chosen-folder', folder)
+  // mainWindow.webContents.send('found-images', images)
+  mainWindow.webContents.send('status', 'Files found')
+
+  // try {
+  //   await createDirs({
+  //     model: models.demo,
+  //     folder,
+  //     mainWindow,
+  //   })
+  //   mainWindow.webContents.send('log', `Creating folderstructure`)
+
+  //   await processing({
+  //     fileList,
+  //     path: folder,
+  //     mainWindow,
+  //     model: models.demo,
+  //   })
+
+  //   mainWindow.webContents.send('status', 'Processing complete')
+
+  //   setTimeout(() => {
+  //     mainWindow.webContents.send('status', 'Innactive')
+  //     mainWindow.webContents.send('found-images', {})
+  //   }, 5000)
+
+  // } catch (err) {
+  //   mainWindow.webContents.send('status', `---ERROR---\n${err}`)
+  //  throw err
+//  }
+
+}
 
 
-  // Create folder structure based on output model
-  // Create a reference to the original folder set
-  // For each directory in any given model;
-    // ! itterate over all RAW image files and create...
-        // * for each model
-          // * Directries for each context
-            // * RAW context images
-            // * Compressed context iamges
 
-  // ! itterate over version in the chosen model
-
-  // ! or something
-  /* 
-    for (context of model.contexts) {
-      processing(filelist: null, path: `${folder}/${model.context}`)
-    }
-  */
- const images = {
-   jpg: fileList.filter(f => f.match(/.jpe?g/)),
-   png: fileList.filter(f => f.match(/.png/)),
-   gif: fileList.filter(f => f.match(/.gif/)),
- }
- console.log({ images })
- mainWindow.webContents.send('found-images', images)
- mainWindow.webContents.send('status', 'Processing...')
- 
+ipcMain.on('start', async (e, content) => {
+  const { folder, fileList } = content
+  console.log({ fileList })
   try {
-    await createDirs({ model, folder })
-    await processing({ fileList, path: folder })
+    await createDirs({
+      model: models.demo,
+      folder,
+      mainWindow,
+    })
+    mainWindow.webContents.send('log', `Creating folderstructure`)
+
+    await processing({
+      fileList,
+      path: folder,
+      mainWindow,
+      model: models.demo,
+    })
+
     mainWindow.webContents.send('status', 'Processing complete')
 
     setTimeout(() => {
@@ -243,10 +282,7 @@ async function openFolder () {
     mainWindow.webContents.send('status', `---ERROR---\n${err}`)
    throw err
  }
-
-}
-
-
+})
 
 
 
