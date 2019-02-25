@@ -45,22 +45,6 @@ function createWindow () {
       ]
     },
 
-    // ! How to create a custom menu item
-    // {
-    //   label: 'Developer',
-    //   submenu: [
-    //     {
-    //       label: 'Toggle Dev Tools',
-    //       accelerator: process.platform === 'darwin'
-    //         ? 'Alt+Command+I'
-    //         : 'Ctrl+Shift+I',
-    //       click () {
-    //         mainWindow.webContents.toggleDevTools()
-    //       },
-    //     },
-    //   ],
-    // },
-
     {
       label: 'File',
       submenu: [
@@ -80,21 +64,6 @@ function createWindow () {
         },
       ]
     },
-
-    // {
-      // label: 'Edit',
-      // submenu: [
-        // { role: 'undo' },
-        // { role: 'redo' },
-        // { type: 'separator' },
-        // { role: 'cut' },
-        // { role: 'copy' },
-        // { role: 'paste' },
-        // { role: 'pasteandmatchstyle' },
-        // { role: 'delete' },
-        // { role: 'selectall' }
-      // ]
-    // },
     {
       label: 'View',
       submenu: [
@@ -121,7 +90,7 @@ function createWindow () {
       submenu: [
         {
           label: 'Learn More',
-          click () { require('electron').shell.openExternal('https://electronjs.org') }
+          click () { require('electron').shell.openExternal('https://github.com/martin-banks/image-un-embiggener') }
         }
       ]
     }
@@ -192,9 +161,6 @@ function openFile () {
 
   // Send file content to the client renderer
   mainWindow.webContents.send('new-file', fileContent)
-  setTimeout(() => {
-    mainWindow.webContents.send('new-file', 'Blah')
-  }, 3000)
 }
 
 
@@ -206,48 +172,8 @@ async function openFolder () {
   if (!folder) return
   console.log({ folder })
 
-  // const fileList = fs
-  //   .readdirSync(folder)
-  //   .toString()
-  //   .split(',')
-  //   .filter(f => f.match(/.jpe?g/))
-
-  // const images = {
-  //   jpg: fileList.filter(f => f.match(/.jpe?g/)),
-  //   png: fileList.filter(f => f.match(/.png/)),
-  //   gif: fileList.filter(f => f.match(/.gif/)),
-  // }
-  // console.log({ images })
   mainWindow.webContents.send('chosen-folder', folder)
-  // mainWindow.webContents.send('found-images', images)
   mainWindow.webContents.send('status', 'Files found')
-
-  // try {
-  //   await createDirs({
-  //     model: models.demo,
-  //     folder,
-  //     mainWindow,
-  //   })
-  //   mainWindow.webContents.send('log', `Creating folderstructure`)
-
-  //   await processing({
-  //     fileList,
-  //     path: folder,
-  //     mainWindow,
-  //     model: models.demo,
-  //   })
-
-  //   mainWindow.webContents.send('status', 'Processing complete')
-
-  //   setTimeout(() => {
-  //     mainWindow.webContents.send('status', 'Innactive')
-  //     mainWindow.webContents.send('found-images', {})
-  //   }, 5000)
-
-  // } catch (err) {
-  //   mainWindow.webContents.send('status', `---ERROR---\n${err}`)
-  //  throw err
-//  }
 
 }
 

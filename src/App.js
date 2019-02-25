@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-import './App.css'
 import styled from 'styled-components'
+
+import Draggable from './components/draggable'
+import Background from './components/background'
+import Dump from './components/dump'
 
 const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
+
 
 class App extends Component {
   constructor () {
@@ -71,7 +75,7 @@ class App extends Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <div className="App">
         <Background />
@@ -106,39 +110,24 @@ class App extends Component {
 
         <hr />
         <p>{ this.state.status }</p>
-        <p>Folder</p>
-        <pre>{ JSON.stringify(this.state.folder, 'utf8', 2) }</pre>
 
-        <p>Files</p>
-        <pre>{ JSON.stringify(this.state.fileList, 'utf8', 2) }</pre>
+        <Dump
+          title="Folder"
+          data={ this.state.folder }
+        />
+        <Dump
+          title="Files"
+          data={ this.state.fileList }
+        />
+        <Dump
+          title="Logs"
+          data={ this.state.log }
+        />
 
-        <p>Logs</p>
-        <pre>{ JSON.stringify(this.state.log, 'utf8', 2) }</pre>
       </div>
     )
   }
 }
-
-
-const Background = styled.div`
-  background: linear-gradient(#333, #222);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-`
-
-const Draggable = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba(0,0,0, 0);
-  width: 100vw;
-  height: 40px;
-  z-index: 10000;
-`
 
 
 export default App
