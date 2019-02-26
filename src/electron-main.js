@@ -4,10 +4,10 @@ const fs = require('fs')
 
 const processing = require('./processing')
 const createDirs = require('./processing/create-directories')
+const menuModel = require('./electron-components/menu')
 
 const models = {
   demo: require('./image-models/demo')
-
 }
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -34,67 +34,8 @@ function createWindow () {
     mainWindow.webContents.send('models', models)
   })
 
+  const menuTemplate = menuModel({ openFile, openFolder })
 
-  const menuTemplate = [
-    {
-      label: 'App',
-      submenu: [
-        {
-          role: 'about'
-        }
-      ]
-    },
-
-    {
-      label: 'File',
-      submenu: [
-        {
-          label: 'Open Files',
-          accelerator: 'CmdOrCtrl+O',
-          click () {
-            openFile()
-          },
-        },
-        {
-          label: 'Choose Folder',
-          accelerator: 'CmdOrCtrl+Shift+O',
-          click () {
-            openFolder()
-          },
-        },
-      ]
-    },
-    {
-      label: 'View',
-      submenu: [
-        { role: 'reload' },
-        { role: 'forcereload' },
-        { role: 'toggledevtools' },
-        { type: 'separator' },
-        { role: 'resetzoom' },
-        { role: 'zoomin' },
-        { role: 'zoomout' },
-        { type: 'separator' },
-        { role: 'togglefullscreen' }
-      ]
-    },
-    {
-      role: 'window',
-      submenu: [
-        { role: 'minimize' },
-        { role: 'close' }
-      ]
-    },
-    {
-      role: 'help',
-      submenu: [
-        {
-          label: 'Learn More',
-          click () { require('electron').shell.openExternal('https://github.com/martin-banks/image-un-embiggener') }
-        }
-      ]
-    }
-  ]
   const menu = Menu.buildFromTemplate(menuTemplate)
 
   Menu.setApplicationMenu(menu)
