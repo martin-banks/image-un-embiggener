@@ -19,8 +19,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 600,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       nodeIntegration: true,
       experimentalFeatures: true,
@@ -121,10 +121,11 @@ async function openFolder () {
 
   mainWindow.webContents.send('chosen-folder', folder)
   mainWindow.webContents.send('status', 'Files found')
-
 }
 
-
+ipcMain.on('open-choose-folder', (e, content) => {
+  openFolder()
+})
 
 ipcMain.on('start', async (e, content) => {
   const { folder, fileList } = content
@@ -135,19 +136,21 @@ ipcMain.on('start', async (e, content) => {
       folder,
       mainWindow,
     })
-    mainWindow.webContents.send('log', `Creating folderstructure`)
+    mainWindow.webContents.send('log', `Creating folder structure`)
 
+    mainWindow.webContents.send('status', 'Processing')
     await processing({
       fileList,
       path: folder,
       mainWindow,
       model: models.demo,
     })
-
-    mainWindow.webContents.send('status', 'Processing complete')
+    mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
+    mainWindow.webContents.send('status', 'Innactive')
+    mainWindow.webContents.send('chosen-folder', '')
 
     setTimeout(() => {
-      mainWindow.webContents.send('status', 'Innactive')
+      // mainWindow.webContents.send('status', 'Innactive')
       mainWindow.webContents.send('found-images', {})
     }, 5000)
 

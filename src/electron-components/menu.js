@@ -5,20 +5,24 @@ module.exports = function (fns) {
       submenu: [
         {
           role: 'about'
-        }
+        },
+        {
+          role: 'quit',
+          label: 'Quit',
+        },
       ]
     },
   
     {
       label: 'File',
       submenu: [
-        {
-          label: 'Open Files',
-          accelerator: 'CmdOrCtrl+O',
-          click () {
-            fns.openFile()
-          },
-        },
+        // {
+        //   label: 'Open Files',
+        //   accelerator: 'CmdOrCtrl+O',
+        //   click () {
+        //     fns.openFile()
+        //   },
+        // },
         {
           label: 'Choose Folder',
           accelerator: 'CmdOrCtrl+Shift+O',

@@ -11,7 +11,7 @@ class Dump extends React.Component {
       <div>
         <p>{ this.props.title }</p>
         <pre>
-          { JSON.stringify(this.props.data, 'utf8', 2) }
+          { JSON.stringify(this.props.content, 'utf8', 2) }
         </pre>
       </div>
     )
@@ -20,7 +20,11 @@ class Dump extends React.Component {
 
 Dump.propTypes = {
   title: PropTypes.string,
-  data: PropTypes.object
+  content: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+    PropTypes.string,
+  ])
 }
 
 export default Dump

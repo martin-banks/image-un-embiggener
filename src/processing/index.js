@@ -69,26 +69,31 @@ function compressing ({ path, mainWindow } = {}) {
       console.log({ target })
       const output = `${path}/${crop.context}${crop.suffix}/optim`
       console.log({ output })
-      const processed = await imagemin(
-        [ target ],
-        output,
-        {
-          plugins: [
-            imageminJpegoptim({
-              max: 40,
-              stripAll: true,
-            }),
-            imageminJpegTran(),
-            imageminMozjpeg(),
-            imageminPngquant({
-              strip: true,
-              quality: [0.3, 0.5],
-              dithering: 0.3,
-            })
-          ]
-        }
-      )
-      console.log({ processed })
+      try {
+        const processed = await imagemin(
+          [ target ],
+          output,
+          {
+            plugins: [
+              imageminJpegoptim({
+                max: 40,
+                stripAll: true,
+              }),
+              imageminJpegTran(),
+              imageminMozjpeg(),
+              imageminPngquant({
+                strip: true,
+                quality: [0.3, 0.5],
+                dithering: 0.3,
+              })
+            ]
+          }
+        )
+        console.log({ processed })
+      } catch (err) {
+        console.log('ERROR PROCESSINGG IMAGE', err)
+        reject(err)
+      }
     }
     resolve()
   })
@@ -105,7 +110,7 @@ async function processing ({ fileList, path, mainWindow, model } = {}) {
     await compressing({ path: `${path}`, mainWindow })
     console.log('\n-------------\nall compressing done\n-------------\n')
     console.log('\n-------------\neol\n-------------\n')
-    mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
+    // mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
   } catch (error) {
     throw error
   }
