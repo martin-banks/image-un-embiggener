@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const isDev = require('electron-is-dev')
 
-const processing = require('../src/processing')
+const processing = require('../src/processing/index')
 const createDirs = require('../src/processing/create-directories')
 const menuModel = require('../src/electron-components/menu')
 

@@ -7,16 +7,21 @@
     "appId": "com.martinbanks.imageunembiggener",
     "files": [
       "build/**/*",
-      "noide_modules"
+      "node_modules/**/*",
+      "src/electron-components/**/*",
+      "src/processing/**/*",
+      "src/image-models/**/*"
     ],
     "directories": {
-      "biuldResources": "assets"
+      "buildResources": "assets"
     }
   },
   "homepage": "./",
-  "dependencies": {
+  "devDependencies": {
     "electron": "^4.0.5",
-    "electron-builder": "^20.38.5",
+    "electron-builder": "^20.38.5"
+  },
+  "dependencies": {
     "electron-icon-maker": "0.0.4",
     "electron-is-dev": "^1.0.1",
     "electron-react-devtools": "^0.5.3",
