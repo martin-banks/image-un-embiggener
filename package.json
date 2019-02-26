@@ -1,9 +1,24 @@
 {
-  "name": "image-unbiggener",
+  "name": "image-un-embiggener",
+  "author": "Martin Banks",
   "version": "0.1.0",
   "private": true,
+  "build": {
+    "appId": "com.martinbanks.imageunembiggener",
+    "files": [
+      "build/**/*",
+      "noide_modules"
+    ],
+    "directories": {
+      "biuldResources": "assets"
+    }
+  },
+  "homepage": "./",
   "dependencies": {
     "electron": "^4.0.5",
+    "electron-builder": "^20.38.5",
+    "electron-icon-maker": "0.0.4",
+    "electron-is-dev": "^1.0.1",
     "electron-react-devtools": "^0.5.3",
     "imagemin": "^6.1.0",
     "imagemin-jpegoptim": "^6.0.0",
@@ -17,10 +32,14 @@
     "react-scripts": "2.1.5",
     "styled-components": "^4.1.3"
   },
-  "main": "src/electron-main.js",
+  "main": "public/electron.js",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "react-build": "react-scripts build",
+    "electron-build": "electron-builder",
+    "electron-pack": "build --em.main=build/electron.js",
+    "preelectron-pack": "yarn build",
+    "build": "yarn react-build && yarn electron-build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron": "electron ."
