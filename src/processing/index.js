@@ -28,15 +28,15 @@ function resize ({ path, file, crop, mainWindow } = {}) {
       if (err) reject(err)
       if (!image) reject(`${image} is not supported`)
       console.log({ image })
-      const newFilename = file.replace(/.jpe?g|.png/i, `${crop.suffix}`)
+      const newFilename = file.replace(/.jpe?g|.png/i, '')
       const destJPG = `${path}/${crop.context}${crop.suffix}/${newFilename}.jpg`
-      const destPNG = `${path}/${crop.context}${crop.suffix}/${newFilename}.png`
-      console.log({ destJPG, destPNG })
+      // const destPNG = `${path}/${crop.context}${crop.suffix}/${newFilename}.png`
+      console.log({ destJPG })
       image.resize(crop.width, Jimp.AUTO)
       image.quality(crop.quality.jpg)
       crop.blur && image.blur(crop.blur)
       image.write(destJPG)
-      image.write(destPNG)
+      // image.write(destPNG)
 
       resolve(`${file} done`)
     })
@@ -59,12 +59,15 @@ function formatting ({ fileList, path, mainWindow } = {}) {
 }
 
 
+// ! ERROR HERE
+// Problem lies with how packaged app handles paths and required for imageOptim?
 function compressing ({ path, mainWindow } = {}) {
   return new Promise (async (resolve, reject) => {
     for (const crop of state.model.crops) {
       console.log({ crop })
       console.log('starting compression:', path)
-      const target = `${path}/${crop.context}${crop.suffix}/*.{jpg,png}`
+      // const target = `${path}/${crop.context}${crop.suffix}/*.{jpg,png}`
+      const target = `${path}/${crop.context}${crop.suffix}/Blackheath-34 images.jpg`
       mainWindow.webContents.send('log', `Compressing: ${target}`)
       console.log({ target })
       const output = `${path}/${crop.context}${crop.suffix}/optim`
@@ -79,13 +82,13 @@ function compressing ({ path, mainWindow } = {}) {
                 max: 40,
                 stripAll: true,
               }),
-              imageminJpegTran(),
-              imageminMozjpeg(),
-              imageminPngquant({
-                strip: true,
-                quality: [0.3, 0.5],
-                dithering: 0.3,
-              })
+              // imageminJpegTran(),
+              // imageminMozjpeg(),
+              // imageminPngquant({
+              //   strip: true,
+              //   quality: [0.3, 0.5],
+              //   dithering: 0.3,
+              // })
             ]
           }
         )
@@ -107,7 +110,7 @@ async function processing ({ fileList, path, mainWindow, model } = {}) {
   try {
     await formatting({ fileList, path, mainWindow })
     console.log('\n-------------\nall formatting done\n-------------\n')
-    await compressing({ path: `${path}`, mainWindow })
+    // await compressing({ path, mainWindow })
     console.log('\n-------------\nall compressing done\n-------------\n')
     console.log('\n-------------\neol\n-------------\n')
     // mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
