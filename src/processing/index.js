@@ -50,8 +50,42 @@ function formatting ({ fileList, path, mainWindow } = {}) {
       console.log('formatting', file, path)
       mainWindow.webContents.send('log', `Formatting: ${path}/${file}`)
       for (const crop of state.model.crops) {
+        const target = `${path}/${crop.context}${crop.suffix}/${file}`
+        const output = `${path}/${crop.context}${crop.suffix}/optim`
         mainWindow.webContents.send('log', `Crop: ${crop.context}${crop.suffix}`)
-        await resize({ path, file, crop })
+        try {
+          await resize({ path, file, crop })
+        } catch (err) {
+          console.log('--- ERROR RESIZING IMAGE ---\n', err)
+          reject(Err)
+        }
+
+        try {
+          const processed = await imagemin(
+            [ target ],
+            output,
+            {
+              plugins: [
+                imageminJpegoptim({
+                  max: 40,
+                  stripAll: true,
+                }),
+                // imageminJpegTran(),
+                // imageminMozjpeg(),
+                // imageminPngquant({
+                //   strip: true,
+                //   quality: [0.3, 0.5],
+                //   dithering: 0.3,
+                // })
+              ]
+            }
+          )
+          console.log({ processed })
+        } catch (err) {
+          console.log('ERROR PROCESSINGG IMAGE', err)
+          reject(err)
+        }
+
       }
     }
     resolve()
