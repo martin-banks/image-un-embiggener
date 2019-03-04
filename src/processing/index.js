@@ -83,7 +83,8 @@ function formatting ({ fileList, path, mainWindow } = {}) {
           console.log({ processed })
         } catch (err) {
           console.log('ERROR PROCESSINGG IMAGE', err)
-          reject(err)
+          reject(`--- ERROR ---\nProcessing image\n${target} `)
+          // reject(err)
         }
 
       }
