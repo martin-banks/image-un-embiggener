@@ -61,6 +61,12 @@ function formatting ({ fileList, path, mainWindow } = {}) {
         }
 
         try {
+          // ! ERROR
+          // image cannot be processed as requires local write (?).
+          // instead read image as buffer and pass to imageOptiom.buffer(buffer, { plugins: []} )
+          // returns a buffer; use this to write to file
+          // https://stackoverflow.com/questions/41496650/how-to-use-the-imagemin-buffer-function
+
           const processed = await imagemin(
             [ target ],
             output,
