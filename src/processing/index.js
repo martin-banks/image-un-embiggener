@@ -4,6 +4,8 @@ const imageminJpegoptim = require('imagemin-jpegoptim')
 const imageminPngquant = require('imagemin-pngquant')
 const imageminMozjpeg = require('imagemin-mozjpeg')
 const Jimp = require('jimp')
+const fs = require('fs')
+const Promise = require('bluebird')
 
 // const model = require('../image-models/carousel')
 
@@ -55,43 +57,79 @@ function formatting ({ fileList, path, mainWindow } = {}) {
         mainWindow.webContents.send('log', `Crop: ${crop.context}${crop.suffix}`)
         try {
           await resize({ path, file, crop })
+          fs.readFile(target, async (err, buffer) => {
+            const optimised = await imagemin.buffer(buffer, {
+              plugins: [
+                  imageminMozjpeg(),
+                  imageminPngquant({quality: '40'})
+              ]
+            })
+            console.log({ optimised })
+  
+            fs.writeFile(`${output}/${file}`, optimised, (err, res) => {
+              if (err) {
+                reject(err)
+                return err
+              } else {
+                console.log('file written', `${output}/${file}`)
+                mainWindow.webContents.send('log', `Optimised file written: ${path}/${file}`)
+                console.log(res)
+              }
+            })
+          })
         } catch (err) {
           console.log('--- ERROR RESIZING IMAGE ---\n', err)
           reject(Err)
         }
 
-        try {
+        // try {
           // ! ERROR
           // image cannot be processed as requires local write (?).
           // instead read image as buffer and pass to imageOptiom.buffer(buffer, { plugins: []} )
           // returns a buffer; use this to write to file
           // https://stackoverflow.com/questions/41496650/how-to-use-the-imagemin-buffer-function
 
-          const processed = await imagemin(
-            [ target ],
-            output,
-            {
-              plugins: [
-                imageminJpegoptim({
-                  max: 40,
-                  stripAll: true,
-                }),
-                // imageminJpegTran(),
-                // imageminMozjpeg(),
-                // imageminPngquant({
-                //   strip: true,
-                //   quality: [0.3, 0.5],
-                //   dithering: 0.3,
-                // })
-              ]
-            }
-          )
-          console.log({ processed })
-        } catch (err) {
-          console.log('ERROR PROCESSINGG IMAGE', err)
-          reject(`--- ERROR ---\nProcessing image\n${target} `)
-          // reject(err)
-        }
+
+          // Promise.promisify(fs.readFile)(target)
+          //   .then(buffer => {
+          //     return imagemin.buffer(buffer, {
+          //       plugins: [
+          //           imageminMozjpeg(),
+          //           imageminPngquant({quality: '40'})
+          //       ]
+          //     })
+          //   })
+          //   .then(outBuffer => {
+          //     console.log(outBuffer.length);
+          //   }).catch(err => {
+          //     console.log(err)
+          //   })
+
+          // const processed = await imagemin(
+          //   [ target ],
+          //   output,
+          //   {
+          //     plugins: [
+          //       imageminJpegoptim({
+          //         max: 40,
+          //         stripAll: true,
+          //       }),
+          //       // imageminJpegTran(),
+          //       // imageminMozjpeg(),
+          //       // imageminPngquant({
+          //       //   strip: true,
+          //       //   quality: [0.3, 0.5],
+          //       //   dithering: 0.3,
+          //       // })
+          //     ]
+          //   }
+          // )
+          // console.log({ processed })
+        // } catch (err) {
+        //   console.log('ERROR PROCESSINGG IMAGE', err)
+        //   reject(`--- ERROR ---\nProcessing image\n${target} `)
+        //   // reject(err)
+        // }
 
       }
     }
@@ -102,46 +140,46 @@ function formatting ({ fileList, path, mainWindow } = {}) {
 
 // ! ERROR HERE
 // Problem lies with how packaged app handles paths and required for imageOptim?
-function compressing ({ path, mainWindow } = {}) {
-  return new Promise (async (resolve, reject) => {
-    for (const crop of state.model.crops) {
-      console.log({ crop })
-      console.log('starting compression:', path)
-      // const target = `${path}/${crop.context}${crop.suffix}/*.{jpg,png}`
-      const target = `${path}/${crop.context}${crop.suffix}/Blackheath-34 images.jpg`
-      mainWindow.webContents.send('log', `Compressing: ${target}`)
-      console.log({ target })
-      const output = `${path}/${crop.context}${crop.suffix}/optim`
-      console.log({ output })
-      try {
-        const processed = await imagemin(
-          [ target ],
-          output,
-          {
-            plugins: [
-              imageminJpegoptim({
-                max: 40,
-                stripAll: true,
-              }),
-              // imageminJpegTran(),
-              // imageminMozjpeg(),
-              // imageminPngquant({
-              //   strip: true,
-              //   quality: [0.3, 0.5],
-              //   dithering: 0.3,
-              // })
-            ]
-          }
-        )
-        console.log({ processed })
-      } catch (err) {
-        console.log('ERROR PROCESSINGG IMAGE', err)
-        reject(err)
-      }
-    }
-    resolve()
-  })
-}
+// function compressing ({ path, mainWindow } = {}) {
+//   return new Promise (async (resolve, reject) => {
+//     for (const crop of state.model.crops) {
+//       console.log({ crop })
+//       console.log('starting compression:', path)
+//       // const target = `${path}/${crop.context}${crop.suffix}/*.{jpg,png}`
+//       const target = `${path}/${crop.context}${crop.suffix}/Blackheath-34 images.jpg`
+//       mainWindow.webContents.send('log', `Compressing: ${target}`)
+//       console.log({ target })
+//       const output = `${path}/${crop.context}${crop.suffix}/optim`
+//       console.log({ output })
+//       try {
+//         const processed = await imagemin(
+//           [ target ],
+//           output,
+//           {
+//             plugins: [
+//               imageminJpegoptim({
+//                 max: 40,
+//                 stripAll: true,
+//               }),
+//               // imageminJpegTran(),
+//               // imageminMozjpeg(),
+//               // imageminPngquant({
+//               //   strip: true,
+//               //   quality: [0.3, 0.5],
+//               //   dithering: 0.3,
+//               // })
+//             ]
+//           }
+//         )
+//         console.log({ processed })
+//       } catch (err) {
+//         console.log('ERROR PROCESSINGG IMAGE', err)
+//         reject(err)
+//       }
+//     }
+//     resolve()
+//   })
+// }
 
 
 async function processing ({ fileList, path, mainWindow, model } = {}) {

@@ -22,6 +22,7 @@
     "electron-builder": "^20.38.5"
   },
   "dependencies": {
+    "bluebird": "^3.5.3",
     "electron-icon-maker": "0.0.4",
     "electron-is-dev": "^1.0.1",
     "electron-react-devtools": "^0.5.3",
