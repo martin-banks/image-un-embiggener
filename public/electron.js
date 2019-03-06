@@ -9,7 +9,7 @@ const createDirs = require('../src/processing/create-directories')
 const menuModel = require('../src/electron-components/menu')
 
 const models = {
-  demo: require('../src/image-models/demo'),
+  // demo: require('../src/image-models/demo'),
   slider: require('../src/image-models/slider')
 }
 
@@ -131,22 +131,22 @@ ipcMain.on('open-choose-folder', (e, content) => {
 })
 
 ipcMain.on('start', async (e, content) => {
-  const { folder, fileList } = content
+  const { folder, fileList, model } = content
   console.log({ fileList })
   try {
     await createDirs({
-      model: models.demo,
+      model: models[model],
       folder,
       mainWindow,
     })
-    mainWindow.webContents.send('log', `Creating folder structure`)
+    mainWindow.webContents.send('log', `Creating folder structure for ${model} model`)
 
     mainWindow.webContents.send('status', 'Processing')
     await processing({
       fileList,
       path: folder,
       mainWindow,
-      model: models.demo,
+      model: models[model],
     })
     mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
     mainWindow.webContents.send('status', 'Innactive')
