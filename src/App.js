@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+import packageDetails from '../package.json'
+
 import Draggable from './components/draggable'
 import Background from './components/background'
 import Dump from './components/dump'
+import StrategyButton from './components/strategy-button'
 
 const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
@@ -80,8 +83,10 @@ class App extends Component {
     })
   }
 
-  handleClick_start () {
+  handleClick_start (model) {
+    console.log({ model })
     ipcRenderer.send('start', {
+      model,
       folder: this.state.folder,
       fileList: this.state.fileList,
     })
@@ -96,11 +101,13 @@ class App extends Component {
       <div className="App">
         <Background />
         <Draggable />
-        <h1>Image Un-Embiggener</h1>
+        {/* <h1>Image Un-Embiggener</h1> */}
+
+        <Version>version: { packageDetails.version }</Version>
 
         <h3>How to:</h3>
         <ul>
-          <li>Choose a folder from File/Choose Folder menu [ ⌘ + ⬆  + O ]</li>
+          <li>Choose a folder with the button below or press [ ⌘ + ⬆  + O ]</li>
           <li>Press the button for the approriate optimisation template</li>
           <li>Wait for the images to all be processed</li>
         </ul>
@@ -121,18 +128,29 @@ class App extends Component {
             <button onClick={ this.handleClick_chooseFolder }>Choose Folder</button>
         }
         {
-          this.state.showProcessingButtons &&
-            <button onClick={ this.handleClick_start }>Run demo optimiser</button>
+          // this.state.showProcessingButtons &&
+          //   <button onClick={ this.handleClick_start.bind(null, 'foo') }>Run demo optimiser</button>
         }
+        {/* {
+          this.state.showProcessingButtons &&
+            Object.keys(this.state.models)
+              .map(key => <button onClick={ this.handleClick_start.bind(null, key) }>{ key }</button>)
+        } */}
 
-        {/*
-          this.state.foundImages && Object.keys(this.state.foundImages)
-            .map(k => {
-              return this.state.foundImages[k].map(file => {
-                return <img src={ `file:/${this.state.folder}/${file}` } alt=""/>
-              })
-            })
-          */}
+        <ButtonWrapper>
+          {
+            this.state.showProcessingButtons &&
+              Object.keys(this.state.models)
+                .map(k =>  <StrategyButton
+                  handleClick={ this.handleClick_start }
+                  model={ k }
+                  details={ this.state.models[k] }
+                />
+              )
+          }
+        </ButtonWrapper>
+       
+
 
         <hr />
 
@@ -148,10 +166,10 @@ class App extends Component {
           title="Logs"
           content={ this.state.log }
         />
-        <Dump
+        {/* <Dump
           title="File content"
           content={ this.state.fileContent }
-        />
+        /> */}
 
       </div>
     )
@@ -160,3 +178,22 @@ class App extends Component {
 
 
 export default App
+
+
+const ButtonWrapper = styled.div`
+  display: flex;
+`
+
+const Version = styled.span`
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 1rem 2rem;
+  background: rgba(0,0,0, 0.4);
+  font-family: monospace;
+  font-weight: 600;
+  color: #bada55;
+  opacity: 0.5;
+  margin: 1rem;
+  border-radius: 0.5rem;
+`
