@@ -72,8 +72,8 @@ function formatting ({ fileList, path, mainWindow } = {}) {
             mainWindow.webContents.send('log', 'File read...')
             const optimised = await imagemin.buffer(buffer, {
               plugins: [
-                  imageminMozjpeg(),
-                  imageminPngquant({quality: '40'})
+                imageminMozjpeg(),
+                imageminPngquant({quality: '40'})
               ]
             })
             console.log({ optimised })
