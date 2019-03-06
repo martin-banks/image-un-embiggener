@@ -1,3 +1,6 @@
+const info = {
+  description: 'Crops images suitable for basic stliders and static graphics published through Kurator Editorial Tools'
+}
 const crops = [
   // {
   //   context: 'mobile',
@@ -102,6 +105,7 @@ const report = {
 }
 
 module.exports = {
+  info,
   crops,
   report,
 }
