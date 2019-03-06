@@ -9,7 +9,8 @@ const createDirs = require('../src/processing/create-directories')
 const menuModel = require('../src/electron-components/menu')
 
 const models = {
-  demo: require('../src/image-models/demo')
+  demo: require('../src/image-models/demo'),
+  slider: require('../src/image-models/slider')
 }
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -21,6 +22,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 500,
     height: 800,
+    x: 0,
+    y: 0,
     webPreferences: {
       nodeIntegration: true,
       experimentalFeatures: true,
