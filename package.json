@@ -26,6 +26,7 @@
     "electron-icon-maker": "0.0.4",
     "electron-is-dev": "^1.0.1",
     "electron-react-devtools": "^0.5.3",
+    "hazardous": "^0.3.0",
     "imagemin": "^6.1.0",
     "imagemin-jpegoptim": "^6.0.0",
     "imagemin-jpegtran": "^6.0.0",

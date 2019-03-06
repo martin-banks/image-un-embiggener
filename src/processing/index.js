@@ -1,4 +1,6 @@
-const imagemin = require('imagemin')
+require('hazardous')
+const path = require('path')
+let imagemin = require('imagemin')
 const imageminJpegTran = require('imagemin-jpegtran')
 const imageminJpegoptim = require('imagemin-jpegoptim')
 const imageminPngquant = require('imagemin-pngquant')
@@ -6,6 +8,10 @@ const imageminMozjpeg = require('imagemin-mozjpeg')
 const Jimp = require('jimp')
 const fs = require('fs')
 const Promise = require('bluebird')
+
+// imagemin = path.join(imagemin, '')
+
+
 
 // const model = require('../image-models/carousel')
 
@@ -57,7 +63,13 @@ function formatting ({ fileList, path, mainWindow } = {}) {
         mainWindow.webContents.send('log', `Crop: ${crop.context}${crop.suffix}`)
         try {
           await resize({ path, file, crop })
+          mainWindow.webContents.send('log', 'Starting file read')
           fs.readFile(target, async (err, buffer) => {
+            if (err) {
+              reject(err)
+              return
+            }
+            mainWindow.webContents.send('log', 'File read...')
             const optimised = await imagemin.buffer(buffer, {
               plugins: [
                   imageminMozjpeg(),
@@ -66,19 +78,22 @@ function formatting ({ fileList, path, mainWindow } = {}) {
             })
             console.log({ optimised })
   
+            mainWindow.webContents.send('log', `Optimised file write`)
             fs.writeFile(`${output}/${file}`, optimised, (err, res) => {
+              console.log('starting optimised file write')
+              mainWindow.webContents.send('log', `Starting optimised file write: ${path}/${file}`)
               if (err) {
                 reject(err)
                 return err
-              } else {
-                console.log('file written', `${output}/${file}`)
-                mainWindow.webContents.send('log', `Optimised file written: ${path}/${file}`)
-                console.log(res)
               }
+              console.log('file written', `${output}/${file}`)
+              mainWindow.webContents.send('log', `Optimised file written: ${path}/${file}`)
+              console.log(res)
             })
           })
         } catch (err) {
           console.log('--- ERROR RESIZING IMAGE ---\n', err)
+          mainWindow.webContents.send('log', `--- FORMATTING ERROR ---\n${err}\n-------`)
           reject(Err)
         }
 
