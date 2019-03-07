@@ -1,7 +1,7 @@
 {
   "name": "image-un-embiggener",
   "author": "Martin Banks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "build": {
     "appId": "com.martinbanks.imageunembiggener",
@@ -33,9 +33,11 @@
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^7.0.0",
     "jimp": "^0.6.0",
+    "marked": "^0.6.1",
     "mkdirp": "^0.5.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
+    "react-markdown": "^4.0.6",
     "react-scripts": "2.1.5",
     "styled-components": "^4.1.3",
     "typescript": "^3.3.3333"
