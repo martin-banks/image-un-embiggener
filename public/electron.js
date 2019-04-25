@@ -6,6 +6,7 @@ const isDev = require('electron-is-dev')
 
 const processing = require('../src/processing/index')
 const createDirs = require('../src/processing/create-directories')
+const processWithSharp = require('../src/processing/with-sharp')
 const menuModel = require('../src/electron-components/menu')
 
 const models = {
@@ -145,6 +146,12 @@ ipcMain.on('start', async (e, content) => {
     await processing({
       fileList,
       path: folder,
+      mainWindow,
+      model: models[model],
+    })
+    await processWithSharp({
+      fileList,
+      filePath: folder,
       mainWindow,
       model: models[model],
     })
