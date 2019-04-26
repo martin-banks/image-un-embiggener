@@ -34,9 +34,10 @@ class App extends Component {
       // showChooseFolderButton: true,
 
       page: 'optimiser',
+      fileData: [],
     }
-    this.handleSetpage = this.handleSetpage.bind(this)
-    // this.handleClick_start = this.handleClick_start.bind(this)
+    // this.handleSetpage = this.handleSetpage.bind(this)
+    this.handleClick_start = this.handleClick_start.bind(this)
 
     ipcRenderer.on('new-file', (e, content) => {
       console.log({ content })
@@ -109,7 +110,7 @@ class App extends Component {
     this.setState({ page })
     console.log(this.state.page)
   } 
-  handleClickStart () {}
+  handleClick_start () {}
 
 
   render () {
@@ -167,7 +168,13 @@ class App extends Component {
           }
         {/* </ButtonWrapper> */}
        
+        <hr />
 
+        {
+          this.state.fileData.map(file => <li>
+            { file.name } | { file.before } | { file.after }
+          </li>)
+        }
 
         <hr />
 
