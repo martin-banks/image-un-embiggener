@@ -94,7 +94,7 @@ function formatting ({ fileList, path, mainWindow } = {}) {
         } catch (err) {
           console.log('--- ERROR RESIZING IMAGE ---\n', err)
           mainWindow.webContents.send('log', `--- FORMATTING ERROR ---\n${err}\n-------`)
-          reject(Err)
+          reject(err)
         }
 
         // try {
@@ -207,7 +207,6 @@ async function processing ({ fileList, path, mainWindow, model } = {}) {
     // await compressing({ path, mainWindow })
     console.log('\n-------------\nall compressing done\n-------------\n')
     console.log('\n-------------\neol\n-------------\n')
-    // mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
   } catch (error) {
     throw error
   }

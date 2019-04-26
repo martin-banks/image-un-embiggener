@@ -143,12 +143,12 @@ ipcMain.on('start', async (e, content) => {
     mainWindow.webContents.send('log', `Creating folder structure for ${model} model`)
 
     mainWindow.webContents.send('status', 'Processing')
-    await processing({
-      fileList,
-      path: folder,
-      mainWindow,
-      model: models[model],
-    })
+    // await processing({
+    //   fileList,
+    //   path: folder,
+    //   mainWindow,
+    //   model: models[model],
+    // })
     await processWithSharp({
       fileList,
       filePath: folder,

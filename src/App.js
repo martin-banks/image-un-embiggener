@@ -12,6 +12,7 @@ const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
 
 
+
 class App extends Component {
   constructor () {
     super()
@@ -46,15 +47,28 @@ class App extends Component {
           .filter(f => f.match(/.jpe?g|.png|.gif/))
         : []
 
-      // const images = {
-      //   jpg: fileList.filter(f => f.match(/.jpe?g/)),
-      //   png: fileList.filter(f => f.match(/.png/)),
-      //   gif: fileList.filter(f => f.match(/.gif/)),
-      // }
+      const images = {
+        jpg: fileList.filter(f => f.match(/.jpe?g/)),
+        png: fileList.filter(f => f.match(/.png/)),
+        gif: fileList.filter(f => f.match(/.gif/)),
+      }
+
       this.setState({
         fileList,
+        images,
         // showProcessingButtons: true,
         // showChooseFolderButton: false,
+      })
+
+      fileList.forEach(file => {
+        fs.stat(`${folderPath}/${file}`, (err, stats) => {
+          const fileData = this.state.fileData || []
+          fileData.push({
+            name: file,
+            before: `${stats.size / 1000}kb`,
+          })
+          this.setState({ fileData })
+        })
       })
     })
 
@@ -161,6 +175,10 @@ class App extends Component {
         <Dump
           title="Files"
           content={ this.state.fileList }
+        />
+        <Dump
+          title="File data"
+          content={ this.state.fileData }
         />
         <Dump
           title="Logs"

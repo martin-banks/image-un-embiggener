@@ -3,14 +3,29 @@ const info = {
 }
 
 const crops = [
+  // {
+  //   context: 'mobile',
+  //   files: {
+  //     jpg: true,
+  //     png: false,
+  //   },
+  //   width: 400,
+  //   suffix: '@1x',
+  //   blur: 0,
+  //   dither: 100,
+  //   sharpen: 0,
+  //   quality: {
+  //     jpg: 40,
+  //   },
+  // },
   {
-    context: 'mobile',
+    context: 'mobile/medium',
     files: {
       jpg: true,
-      png: true,
+      png: false,
     },
-    width: 400,
-    suffix: '@1x',
+    width: 800,
+    suffix: '@2x',
     blur: 0,
     dither: 100,
     sharpen: 0,
@@ -19,10 +34,10 @@ const crops = [
     },
   },
   {
-    context: 'mobile',
+    context: 'mobile/heavy',
     files: {
       jpg: true,
-      png: true,
+      png: false,
     },
     width: 800,
     suffix: '@2x',
@@ -33,27 +48,42 @@ const crops = [
       jpg: 30,
     },
   },
-
   {
-    context: 'desktop',
+    context: 'mobile/ultra',
     files: {
       jpg: true,
-      png: true,
+      png: false,
     },
-    width: 650,
-    suffix: '@1x',
+    width: 800,
+    suffix: '@2x',
     blur: 0,
     dither: 100,
     sharpen: 0,
     quality: {
-      jpg: 30,
+      jpg: 10,
     },
   },
+
+  // {
+  //   context: 'desktop',
+  //   files: {
+  //     jpg: true,
+  //     png: false,
+  //   },
+  //   width: 650,
+  //   suffix: '@1x',
+  //   blur: 0,
+  //   dither: 100,
+  //   sharpen: 0,
+  //   quality: {
+  //     jpg: 30,
+  //   },
+  // },
   {
-    context: 'desktop',
+    context: 'desktop/medium',
     files: {
       jpg: true,
-      png: true,
+      png: false,
     },
     width: 1300,
     suffix: '@2x',
@@ -62,6 +92,36 @@ const crops = [
     sharpen: 0,
     quality: {
       jpg: 40,
+    },
+  },
+  {
+    context: 'desktop/heavy',
+    files: {
+      jpg: true,
+      png: false,
+    },
+    width: 1300,
+    suffix: '@2x',
+    blur: 0,
+    dither: 100,
+    sharpen: 0,
+    quality: {
+      jpg: 30,
+    },
+  },
+  {
+    context: 'desktop/ultra',
+    files: {
+      jpg: true,
+      png: false,
+    },
+    width: 1300,
+    suffix: '@2x',
+    blur: 0,
+    dither: 100,
+    sharpen: 0,
+    quality: {
+      jpg: 10,
     },
   },
 

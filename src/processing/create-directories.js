@@ -13,7 +13,7 @@ function createDirectoies ({ model, folder }) {
     })
     
     for (const crop of model.crops) {
-      const contextDir = `${folder}/${crop.context}${crop.suffix}/optim`
+      const contextDir = `${folder}/${crop.context}${crop.suffix}`
       mkdirp.sync(contextDir, err => {
         if (err) {
           reject(err)
