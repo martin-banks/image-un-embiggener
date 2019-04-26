@@ -5,7 +5,7 @@ html, body {
 body {
   margin: 0;
   padding: 0;
-  padding: 100px;
+  padding: 100px 50px 100px 200px;
   font-family:
     -apple-system,
     BlinkMacSystemFont,
