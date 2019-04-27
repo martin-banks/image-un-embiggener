@@ -1,5 +1,13 @@
 # Version notes
 
+## 0.2.4
+- Adds togglable readme to slider strategy
+
+## 0.2.3
+- Improves messaging from processing scripts
+- Updates to app structure; each strategy will now have it's own page
+- Adds basic layout to slider strategy page
+
 ## 0.2.2
 - Resolve merge conflicts
 - adds tips page
