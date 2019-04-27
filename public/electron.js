@@ -142,7 +142,7 @@ ipcMain.on('start', async (e, content) => {
     })
     mainWindow.webContents.send('log', `Creating folder structure for ${model} model`)
 
-    mainWindow.webContents.send('status', 'Processing')
+    mainWindow.webContents.send('status', 'Processing images...')
     // await processing({
     //   fileList,
     //   path: folder,
@@ -155,9 +155,10 @@ ipcMain.on('start', async (e, content) => {
       mainWindow,
       model: models[model],
     })
-    mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
-    mainWindow.webContents.send('status', 'Innactive')
-    mainWindow.webContents.send('chosen-folder', '')
+    // mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
+    // mainWindow.webContents.send('status', 'complete')
+    // mainWindow.webContents.send('complete', true)
+    // mainWindow.webContents.send('chosen-folder', '')
 
     setTimeout(() => {
       // mainWindow.webContents.send('status', 'Innactive')

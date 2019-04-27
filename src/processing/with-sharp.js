@@ -11,7 +11,7 @@ const { spawn } = require('child_process')
 
 async function processImage ({ file, filePath, model, mainWindow }) {
   return new Promise(async (resolve, reject) => {
-    const data = await sharp(path.join(filePath, file))
+    await sharp(path.join(filePath, file))
       .resize(model.width)
       .jpeg({
         quality: model.quality.jpg,
@@ -26,12 +26,13 @@ async function processImage ({ file, filePath, model, mainWindow }) {
             throw err
           }
           mainWindow.webContents.send('log', `|> DONE: ${file}`)
+          mainWindow.webContents.send('version-complete', { file, dir: `${model.context}${model.suffix}`})
           resolve()
         }
       )
       mainWindow.webContents.send(
         'log', 
-        `|> SHARP -> Complete: ${model.context}${model.suffix} | ${file} | ${data}`
+        `|> SHARP -> Complete: ${model.context}${model.suffix} | ${file}`
       )
   })
 }
@@ -52,6 +53,9 @@ async function processing ({ fileList, filePath, mainWindow, model } = {}) {
       // spawn('mv', [path.join(filePath, file), path.join(filePath, '_RAW')])
     }
     mainWindow.webContents.send('log', `|> SHARP -> All files complete`)
+    mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
+    mainWindow.webContents.send('status', 'complete')
+    mainWindow.webContents.send('complete', true)
     resolve('All files done')
   })
 }
