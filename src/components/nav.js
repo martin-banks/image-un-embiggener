@@ -8,9 +8,8 @@ const Nav = styled.nav`
   width: 150px;
   height: 100vh;
   background: rgba(0,0,0, 0.2);
-  padding: 8px;
   padding-top: 50px;
-  border-right: solid 1px rgba(255,255,255, 0.2)
+  border-right: solid 1px rgba(255,255,255, 0.2);
 `
 
 const LinkWrapper = styled.ul`
@@ -21,9 +20,11 @@ const LinkWrapper = styled.ul`
 const PageLink = styled.li`
   list-style: none;
   padding: 8px;
-  border-radius: 4px;
+  background: ${p => p.active ? 'rgba(0,0,0, 0.2)' : 'rgba(0,0,0, 0)'};
+
+  cursor: pointer;
   &:hover {
-    background: rgba(0,0,0, 0.2);
+    background: rgba(0,0,0, 0.4);
   }
 `
 
@@ -36,8 +37,20 @@ export default class extends Component {
     return (
       <Nav>
         <LinkWrapper>
-          <PageLink onClick={ this.props.setPage.bind(null, 'optimiser')}>Optimiser</PageLink>
-          <PageLink onClick={ this.props.setPage.bind(null, 'tips')}>Tips</PageLink>
+          <PageLink
+            onClick={ this.props.setPage.bind(null, 'tips')}
+            active={ this.props.active === 'tips' }
+          >
+            Tips
+          </PageLink>
+          <hr />
+
+          <PageLink
+            onClick={ this.props.setPage.bind(null, 'slider')}
+            active={ this.props.active === 'slider' }
+          >
+            Slider
+          </PageLink>
         </LinkWrapper>
       </Nav>
     )

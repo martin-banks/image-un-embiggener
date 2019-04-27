@@ -77,12 +77,13 @@ li {
 
 button {
   transition: all 200ms;
+  width: 100%;
   background: none;
   padding: 2rem 3rem;
   border: solid 1px #222;
   color: #333;
   background: white;
-  border-radius: 50px;
+  border-radius: 4px;
   font-size: 2rem;
   font-weight: 600;
   line-height: 1.5rem;
@@ -92,11 +93,9 @@ button {
 
 button:hover {
   background: gold;
+  color: black;
 }
 
-button:focus {
-  background: gold;
-}
 
 pre {
   font-size: 14px;

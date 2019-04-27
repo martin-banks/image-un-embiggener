@@ -1,7 +1,7 @@
 {
   "name": "image-un-embiggener",
   "author": "Martin Banks",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "build": {
     "appId": "com.martinbanks.imageunembiggener",
@@ -27,6 +27,7 @@
     "electron-icon-maker": "0.0.4",
     "electron-is-dev": "^1.0.1",
     "electron-react-devtools": "^0.5.3",
+    "file-type": "^10.11.0",
     "hazardous": "^0.3.0",
     "imagemin": "^6.1.0",
     "imagemin-jpegoptim": "^6.0.0",
