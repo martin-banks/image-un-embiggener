@@ -78,7 +78,7 @@ export default App
 const PageWrapper = styled.article`
   margin: 0 auto;
   width: 100%;
-  max-width: 1200px;
+  max-width: 800px;
 `
 
 const LogButton = styled.button`

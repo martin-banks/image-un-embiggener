@@ -1,7 +1,7 @@
 {
   "name": "image-un-embiggener",
   "author": "Martin Banks",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "build": {
     "appId": "com.martinbanks.imageunembiggener",

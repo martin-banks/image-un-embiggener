@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Markdown from 'react-markdown'
 
 import Dump from '../components/dump'
 import StrategyButton from '../components/strategy-button'
 import PageHeader from '../components/page-header'
-import { PreviousMap } from 'postcss';
+
+import readme from '../image-models/slider/README.md'
 
 const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
@@ -24,8 +26,11 @@ class Optimiser extends Component {
       models: {},
       showProcessingButtons: false,
       showChooseFolderButton: true,
+      readme: null,
+      showReadme: false,
     }
     this.handleClick_start = this.handleClick_start.bind(this)
+    this.toggleReadme = this.toggleReadme.bind(this)
 
     ipcRenderer.on('new-file', (e, content) => {
       console.log({ content })
@@ -125,15 +130,34 @@ class Optimiser extends Component {
       fileList: this.state.fileList,
     })
   }
+  toggleReadme () {
+    this.setState({ showReadme: !this.state.showReadme})
+  }
 
-  async componentDidMount () {}
+  async componentDidMount () {
+    fetch(readme)
+      .then(res => res.text())
+      .then(text => {
+        this.setState({ readme: text })
+      })
+      .catch(console.error)
+  }
 
   render () {
     return (
       <div>
         <PageHeader>
-          <h1>Slider images</h1>
-          <p>For use with Kurator Editorial Tools slider (carousel) template</p>
+          {/* <h1>Slider images</h1>
+          <p>For use with Kurator Editorial Tools slider (carousel) template</p> */}
+          {
+            this.state.showReadme
+              ? <Markdown source={ this.state.readme } />
+              : <h1>Editorial tools slider</h1>
+          }
+          <button onClick={ this.toggleReadme }>
+            { this.state.showReadme ? 'Hide' : 'Show' } details
+          </button>
+
           <pre>
             <h5>STATUS</h5>
             { this.state.status }
