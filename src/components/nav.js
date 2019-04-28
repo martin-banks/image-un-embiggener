@@ -38,6 +38,12 @@ export default class extends Component {
       <Nav>
         <LinkWrapper>
           <PageLink
+            onClick={ this.props.setPage.bind(null, 'home')}
+            active={ this.props.active === 'home' }
+          >
+            Home
+          </PageLink>
+          <PageLink
             onClick={ this.props.setPage.bind(null, 'tips')}
             active={ this.props.active === 'tips' }
           >

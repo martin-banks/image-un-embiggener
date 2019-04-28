@@ -147,8 +147,6 @@ class Optimiser extends Component {
     return (
       <div>
         <PageHeader>
-          {/* <h1>Slider images</h1>
-          <p>For use with Kurator Editorial Tools slider (carousel) template</p> */}
           {
             this.state.showReadme
               ? <Markdown source={ this.state.readme } />
@@ -186,8 +184,6 @@ class Optimiser extends Component {
                   <FileInfo>
                     <FileListHeader></FileListHeader>
                     <FileListHeader>Filesize</FileListHeader>
-                    {/* <FileListHeader>After</FileListHeader> */}
-
                   </FileInfo>
                   {
                     this.state.fileData
@@ -196,16 +192,7 @@ class Optimiser extends Component {
                           <FileInfo key={ `fileinfo-${file.name}` }>
                             <FileName>{ file.name }</FileName>
                             <FileSize>{ Math.round(file.before / 1000) }kb</FileSize>
-                            {/* <FileSize color={
-                              file.after
-                              ? file.after > file.before
-                                    ? 'red'
-                                    : 'green'
-                                    : ''
-                                  }>
-                              { file.after ? Math.round(file.after / 1000) : '-' } kb
-                            </FileSize> */}
-                            {
+                              {
                               Object.keys(file.versions).map(v => 
                                 <>
                                   <VersionFolder>|—— { v }</VersionFolder>
@@ -236,10 +223,6 @@ class Optimiser extends Component {
                 <hr />
               </>
           }
-  
-          {/* <Dump title="New directories" content={ this.state.newDirectories } /> */}
-          {/* <Dump title="Folder" content={ this.state.folder } /> */}
-          {/* <Dump title="Files" content={ this.state.fileList } /> */}
         </div>
     )
   }

@@ -9,6 +9,7 @@ import Nav from './components/nav'
 import Dump from './components/dump'
 import Version from './components/version'
 
+import Home from './pages/home'
 import TipsFileTypes from './pages/tips-filetypes'
 import Slider from './pages/slider'
 
@@ -21,7 +22,7 @@ class App extends Component {
     super()
 
     this.state = {
-      page: 'slider',
+      page: 'home',
       fileData: [],
       log: [],
       showLogs: false,
@@ -54,16 +55,20 @@ class App extends Component {
         <Nav setPage={ this.handleSetpage } active={ this.state.page } />
 
         <PageWrapper>
-          { this.state.page === 'slider' && <Slider /> }
           { this.state.page === 'tips' && <TipsFileTypes /> }
+          { this.state.page === 'slider' && <Slider /> }
+          { this.state.page === 'home' && <Home /> }
+
+          <hr />
+
+          <LogButton onClick={ this.toggleLogs }>{ this.state.showLogs ? 'Hide' : 'Show' } logs</LogButton>
+          {
+            this.state.showLogs
+              && <Dump title="" content={ this.state.log } />
+          }
         </PageWrapper>
 
 
-        <LogButton onClick={ this.toggleLogs }>{ this.state.showLogs ? 'Hide' : 'Show' } logs</LogButton>
-        {
-          this.state.showLogs
-            && <Dump title="" content={ this.state.log } />
-        }
 
         <Version>version: { packageDetails.version }</Version>
 
