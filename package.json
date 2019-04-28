@@ -1,10 +1,10 @@
 {
-  "name": "image-un-embiggener",
+  "name": "picture-stack",
   "author": "Martin Banks",
   "version": "0.2.4",
   "private": true,
   "build": {
-    "appId": "com.martinbanks.imageunembiggener",
+    "appId": "com.martinbanks.imagestack",
     "files": [
       "build/**/*",
       "node_modules/**/*",
