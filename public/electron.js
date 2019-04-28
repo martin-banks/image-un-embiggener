@@ -21,7 +21,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 500,
+    minWidth: 800,
+    width: 1000,
     height: 800,
     x: 0,
     y: 0,
@@ -38,9 +39,9 @@ function createWindow () {
     isDev
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`
-  )
+    )
 
-  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.webContents.send('models', models)
   })
 
@@ -170,9 +171,4 @@ ipcMain.on('start', async (e, content) => {
    throw err
  }
 })
-
-
-
-
-
 
