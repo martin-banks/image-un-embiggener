@@ -61,7 +61,7 @@ export default class extends Component {
             onClick={ this.props.setPage.bind(null, 'compress')}
             active={ this.props.active === 'compress' }
           >
-            Compress
+            Compressor
           </PageLink>
         </LinkWrapper>
       </Nav>

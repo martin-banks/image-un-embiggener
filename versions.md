@@ -1,5 +1,8 @@
 # Version notes
 
+## 0.2.5
+- Adds compressor model - no scaling
+
 ## 0.2.4
 - Adds togglable readme to slider strategy
 

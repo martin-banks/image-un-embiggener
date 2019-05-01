@@ -59,8 +59,9 @@ h6 {
 
 p {
   font-size: 2rem;
+  line-height: 3rem;
   margin: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 span {
@@ -69,10 +70,12 @@ span {
 
 ul {
   font-size: 2rem;
+  margin-bottom: 4rem;
 }
 
 li {
   font-size: 2rem;
+  line-height: 4rem;
 }
 
 button {
@@ -109,10 +112,9 @@ pre {
 
 hr {
   padding: 0;
-  margin: 6rem 0;
+  margin: 4rem 0;
   opacity: 0.6;
   border: none;
   border-bottom: solid 1px black
 }
-
 

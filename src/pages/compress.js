@@ -100,10 +100,14 @@ class Optimiser extends Component {
     })
 
     ipcRenderer.on('status', (e, content) => {
+      console.log({ content })
       this.setState({
         status: content,
-        showChooseFolderButton: true, // content.toLowerCase() === 'innactive',
-        showProcessingButtons: true, // content.toLowerCase() !== 'innactive' && content.toLowerCase() !== 'processing',
+        showChooseFolderButton: true,
+        //content.toLowerCase() === 'innactive' || content.toLowerCase() === 'complete',
+        showProcessingButtons: 
+          (content.toLowerCase() !== 'complete' && content.toLowerCase() !== 'processing')
+          // || (content.toLowerCase() !== 'innactive' && content.toLowerCase() !== 'processing'),
       })
     })
 
@@ -150,12 +154,12 @@ class Optimiser extends Component {
           {
             this.state.showReadme
               ? <Markdown source={ this.state.readme } />
-              : <h1>Image compression</h1>
+              : <h1>Image compressor</h1>
           }
           <LogButton onClick={ this.toggleReadme }>
             { this.state.showReadme ? 'Hide' : 'Show' } details
           </LogButton>
-
+          <hr />
           <pre>
             <h5>STATUS</h5>
             { this.state.status }
@@ -220,7 +224,6 @@ class Optimiser extends Component {
                     )
                   }
                 </FileInfoList>
-                <hr />
               </>
           }
         </div>

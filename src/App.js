@@ -61,16 +61,12 @@ class App extends Component {
           { this.state.page === 'compress' && <Compress /> }
           { this.state.page === 'home' && <Home /> }
 
-          <hr />
-
           <LogButton onClick={ this.toggleLogs }>{ this.state.showLogs ? 'Hide' : 'Show' } logs</LogButton>
           {
             this.state.showLogs
               && <Dump title="" content={ this.state.log } />
           }
         </PageWrapper>
-
-
 
         <Version>version: { packageDetails.version }</Version>
 
