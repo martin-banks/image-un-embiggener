@@ -6,7 +6,7 @@ import Dump from '../components/dump'
 import StrategyButton from '../components/strategy-button'
 import PageHeader from '../components/page-header'
 
-import readme from '../image-models/slider/README.md'
+import readme from '../image-models/compress/README.md'
 
 const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
@@ -125,7 +125,7 @@ class Optimiser extends Component {
 
   handleClick_start () {
     ipcRenderer.send('start', {
-      model: 'slider',
+      model: 'compress',
       folder: this.state.folder,
       fileList: this.state.fileList,
     })
@@ -150,7 +150,7 @@ class Optimiser extends Component {
           {
             this.state.showReadme
               ? <Markdown source={ this.state.readme } />
-              : <h1>Editorial tools slider</h1>
+              : <h1>Image compression</h1>
           }
           <LogButton onClick={ this.toggleReadme }>
             { this.state.showReadme ? 'Hide' : 'Show' } details
@@ -170,7 +170,7 @@ class Optimiser extends Component {
             this.state.showProcessingButtons &&
               <button
                 onClick={ this.handleClick_start }
-                model="slider"
+                model="compress"
               >Start</button>
           }
 

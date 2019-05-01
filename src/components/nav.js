@@ -57,6 +57,12 @@ export default class extends Component {
           >
             Slider
           </PageLink>
+          <PageLink
+            onClick={ this.props.setPage.bind(null, 'compress')}
+            active={ this.props.active === 'compress' }
+          >
+            Compress
+          </PageLink>
         </LinkWrapper>
       </Nav>
     )

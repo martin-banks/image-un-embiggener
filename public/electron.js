@@ -11,7 +11,8 @@ const menuModel = require('../src/electron-components/menu')
 
 const models = {
   // demo: require('../src/image-models/demo'),
-  slider: require('../src/image-models/slider')
+  slider: require('../src/image-models/slider'),
+  compress: require('../src/image-models/compress/index'),
 }
 
 // Keep a global reference of the window object, if you don't, the window will
