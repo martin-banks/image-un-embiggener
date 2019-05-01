@@ -3,21 +3,6 @@ const info = {
 }
 
 const crops = [
-  // {
-  //   context: 'mobile',
-  //   files: {
-  //     jpg: true,
-  //     png: false,
-  //   },
-  //   width: 400,
-  //   suffix: '@1x',
-  //   blur: 0,
-  //   dither: 100,
-  //   sharpen: 0,
-  //   quality: {
-  //     jpg: 40,
-  //   },
-  // },
   {
     context: 'mobile/medium',
     files: {
@@ -27,10 +12,18 @@ const crops = [
     width: 800,
     suffix: '@2x',
     blur: 0,
-    dither: 100,
+    dither: 1,
     sharpen: 0,
     quality: {
       jpg: 40,
+      png: 40,
+      png: 0
+    },
+    compression: {
+      png: 8,
+    },
+    colors: {
+      png: 256,
     },
   },
   {
@@ -42,10 +35,17 @@ const crops = [
     width: 800,
     suffix: '@2x',
     blur: 0,
-    dither: 100,
+    dither: 1,
     sharpen: 0,
     quality: {
       jpg: 30,
+      png: 30,
+    },
+    compression: {
+      png: 6,
+    },
+    colors: {
+      png: 128,
     },
   },
   {
@@ -57,28 +57,21 @@ const crops = [
     width: 800,
     suffix: '@2x',
     blur: 0,
-    dither: 100,
+    dither: 1,
     sharpen: 0,
     quality: {
       jpg: 10,
+      png: 10,
+    },
+    compression: {
+      png: 4,
+    },
+    colors: {
+      png: 64,
     },
   },
 
-  // {
-  //   context: 'desktop',
-  //   files: {
-  //     jpg: true,
-  //     png: false,
-  //   },
-  //   width: 650,
-  //   suffix: '@1x',
-  //   blur: 0,
-  //   dither: 100,
-  //   sharpen: 0,
-  //   quality: {
-  //     jpg: 30,
-  //   },
-  // },
+
   {
     context: 'desktop/medium',
     files: {
@@ -88,10 +81,17 @@ const crops = [
     width: 1300,
     suffix: '@2x',
     blur: 0,
-    dither: 100,
+    dither: 1,
     sharpen: 0,
     quality: {
       jpg: 40,
+      png: 40,
+    },
+    compression: {
+      png: 8,
+    },
+    colors: {
+      png: 256,
     },
   },
   {
@@ -103,10 +103,17 @@ const crops = [
     width: 1300,
     suffix: '@2x',
     blur: 0,
-    dither: 100,
+    dither: 1,
     sharpen: 0,
     quality: {
       jpg: 30,
+      png: 30,
+    },
+    compression: {
+      png: 6,
+    },
+    colors: {
+      png: 128,
     },
   },
   {
@@ -118,10 +125,17 @@ const crops = [
     width: 1300,
     suffix: '@2x',
     blur: 0,
-    dither: 100,
+    dither: 1,
     sharpen: 0,
     quality: {
       jpg: 10,
+      png: 10,
+    },
+    compression: {
+      png: 4,
+    },
+    colors: {
+      png: 64,
     },
   },
 

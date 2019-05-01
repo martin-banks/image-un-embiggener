@@ -9,7 +9,7 @@ const { spawn } = require('child_process')
 // mainWindow
 // model
 
-async function processImage ({ file, filePath, model, mainWindow }) {
+async function processJpeg ({ file, filePath, model, mainWindow }) {
   return new Promise(async (resolve, reject) => {
     await sharp(path.join(filePath, file))
       .resize(model.width)
@@ -37,6 +37,45 @@ async function processImage ({ file, filePath, model, mainWindow }) {
   })
 }
 
+async function processPng ({ file, filePath, model, mainWindow }) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await sharp(path.join(filePath, file))
+        .resize(model.width)
+        // .png()
+        .png({
+          compressionLevel: 9,
+          quality: 10,
+          colors: 64,
+          // quality: model.quality.png,
+          // compressionLevel: model.compression.png,
+          // colors: model.colors.png,
+          // dither: model.dither,
+        })
+        .toFile(
+          path.join(filePath, `${model.context}${model.suffix}/${file}`),
+          err => {
+            if (err) {
+              mainWindow.webContents.send('log', `|> ERROR: ${err}`)
+              reject(err)
+              throw err
+            }
+            mainWindow.webContents.send('log', `|> DONE: ${file}`)
+            mainWindow.webContents.send('version-complete', { file, dir: `${model.context}${model.suffix}`})
+            resolve()
+          }
+        )
+        mainWindow.webContents.send(
+          'log', 
+          `|> SHARP -> Complete: ${model.context}${model.suffix} | ${file}`
+        )
+    } catch (err) {
+      reject(err)
+      throw err
+    }
+  })
+}
+
 
 async function processing ({ fileList, filePath, mainWindow, model } = {}) {
   return new Promise (async (resolve, reject) => {
@@ -44,10 +83,20 @@ async function processing ({ fileList, filePath, mainWindow, model } = {}) {
       mainWindow.webContents.send('log', `|> SHARP -> Starting: ${filePath}/${file}`)
       // const fullImagePath = path.join(filePath, file)
       for (const imageModel of model.crops) {
-        try {
-          await processImage({ file, filePath, model: imageModel, mainWindow })
-        } catch (err) {
-          throw err
+        if (file.includes('.jpg')) {
+          try {
+            await processJpeg({ file, filePath, model: imageModel, mainWindow })
+          } catch (err) {
+            throw err
+          }
+        } else if (file.includes('.png')) {
+          try {
+            await processPng({ file, filePath, model: imageModel, mainWindow })
+          // mainWindow.webContents.send('log', `|> .png files are not supported. Skipping`)
+          } catch (err) {
+            throw err
+          }
+          
         }
       }
       // spawn('mv', [path.join(filePath, file), path.join(filePath, '_RAW')])
