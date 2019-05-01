@@ -2,30 +2,29 @@
 
 What are each of the image types good and bad for?
 
-## jpg
+## .jpg
 
-### Good
-Best suited for highly detailed graphics or photographic based images.
+- Best suited for highly detailed graphics or photographic based images.
 
-Watch out for areas of flat red; this can result in heavy compression atifacts 
+#### Watch out for
+- Anything with flat red (highly suceptible to compression artifiacts)
+- Flat, vertor graphics. May not compress as effeciently, try a png as well
+- Has no support for transparency
 
-### Bad
+---
 
+## .png
+- Simple, vector based graphics with limited color palletes
+- mages that require transparent/translucent backgrounds
 
-## png
-### Good
-Simple, vector based graphics with limited color palletes
+#### Watch out for
 
-### Bad
+---
 
+## .svg
+- Vector based illustrations that need to have styles manipulated (like animation) by code.
+- Simple vector illustrations that need to be rendered at large size
 
-## svg
-
-### Good
-
-- Vector based illustrations that need to have styles manipulated by code.
-- Simple vector illustrations taht need to be rendered at large size
-
-### Bad
-
+#### Watch out for
+- Images are supported
 
