@@ -40,12 +40,14 @@ export default class extends Component {
           <PageLink
             onClick={ this.props.setPage.bind(null, 'home')}
             active={ this.props.active === 'home' }
+            className={ this.props.active === 'home' ? 'activePage' : '' }
           >
             Home
           </PageLink>
           <PageLink
             onClick={ this.props.setPage.bind(null, 'tips')}
             active={ this.props.active === 'tips' }
+            className={ this.props.active === 'tips' ? 'activePage' : '' }
           >
             Tips
           </PageLink>
@@ -54,12 +56,14 @@ export default class extends Component {
           <PageLink
             onClick={ this.props.setPage.bind(null, 'slider')}
             active={ this.props.active === 'slider' }
+            className={ this.props.active === 'slider' ? 'activePage' : '' }
           >
             Slider
           </PageLink>
           <PageLink
             onClick={ this.props.setPage.bind(null, 'compress')}
             active={ this.props.active === 'compress' }
+            className={ this.props.active === 'compress' ? 'activePage' : '' }
           >
             Compressor
           </PageLink>

@@ -118,3 +118,6 @@ hr {
   border-bottom: solid 1px black
 }
 
+.activePage {
+  border-left: solid 4px tomato !important;
+}

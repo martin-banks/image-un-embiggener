@@ -156,6 +156,7 @@ ipcMain.on('start', async (e, content) => {
       filePath: folder,
       mainWindow,
       model: models[model],
+      icon: `${__dirname}/assets/mac/icon.icns`   
     })
     // mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
     // mainWindow.webContents.send('status', 'complete')
