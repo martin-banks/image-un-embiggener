@@ -44,13 +44,13 @@ export default class extends Component {
           >
             Home
           </PageLink>
-          <PageLink
+          {/* <PageLink
             onClick={ this.props.setPage.bind(null, 'tips')}
             active={ this.props.active === 'tips' }
             className={ this.props.active === 'tips' ? 'activePage' : '' }
           >
             Tips
-          </PageLink>
+          </PageLink> */}
           <hr />
 
           <PageLink
