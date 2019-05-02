@@ -11,7 +11,7 @@ const menuModel = require('../src/electron-components/menu')
 
 const models = {
   // demo: require('../src/image-models/demo'),
-  slider: require('../src/image-models/slider'),
+  slider: require('../src/image-models/slider/index'),
   compress: require('../src/image-models/compress/index'),
 }
 
