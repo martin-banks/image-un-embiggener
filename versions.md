@@ -2,6 +2,9 @@
 
 ## 0.2.5
 - Adds compressor model - no scaling
+- Adds basic png support
+- Adds custom logo
+- Removes tips from nav until re-written
 
 ## 0.2.4
 - Adds togglable readme to slider strategy
