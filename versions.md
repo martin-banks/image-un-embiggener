@@ -2,6 +2,7 @@
 
 ## 0.2.6
 - Adds support for uppercase file extensions
+- Adds compare version number to releases
 
 ## 0.2.5
 - Adds compressor model - no scaling
