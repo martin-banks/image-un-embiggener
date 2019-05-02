@@ -99,7 +99,7 @@ async function processing ({ fileList, filePath, mainWindow, model } = {}) {
           
         }
       }
-      // spawn('mv', [path.join(filePath, file), path.join(filePath, '_RAW')])
+      spawn('mv', [path.join(filePath, file), path.join(filePath, '_RAW')])
     }
     mainWindow.webContents.send('log', `|> SHARP -> All files complete`)
     mainWindow.webContents.send('log', `--- All files complete 🤘 ---`)
