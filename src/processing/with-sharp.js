@@ -83,13 +83,13 @@ async function processing ({ fileList, filePath, mainWindow, model } = {}) {
       mainWindow.webContents.send('log', `|> SHARP -> Starting: ${filePath}/${file}`)
       // const fullImagePath = path.join(filePath, file)
       for (const imageModel of model.crops) {
-        if (file.includes('.jpg')) {
+        if (file.toLowerCase().includes('.jpg')) {
           try {
             await processJpeg({ file, filePath, model: imageModel, mainWindow })
           } catch (err) {
             throw err
           }
-        } else if (file.includes('.png')) {
+        } else if (file.toLowerCase().includes('.png')) {
           try {
             await processPng({ file, filePath, model: imageModel, mainWindow })
           // mainWindow.webContents.send('log', `|> .png files are not supported. Skipping`)
