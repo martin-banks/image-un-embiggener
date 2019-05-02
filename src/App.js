@@ -27,6 +27,8 @@ class App extends Component {
       fileData: [],
       log: [],
       showLogs: false,
+      releases: null,
+      update: false,
     }
 
     ipcRenderer.on('log', (e, content) => {
@@ -46,6 +48,31 @@ class App extends Component {
   }
   toggleLogs () {
     this.setState(prevState => prevState.showLogs = !prevState.showLogs)
+  }
+
+  componentDidMount () {
+    // /repos/:owner/:repo/releases/latest
+    fetch('https://api.github.com/repos/martin-banks/image-un-embiggener/releases/latest')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ releases: data })
+        const releaseVersion = data.name.split('.')
+        const thisVersion =  packageDetails.version.split('.')
+        console.log({ thisVersion, releaseVersion})
+        console.log(thisVersion > releaseVersion)
+
+        let i = 0
+        for (const num of releaseVersion) {
+          console.log(num, thisVersion[i], num > thisVersion[i])
+          if (num > thisVersion[i]) {
+            // new version available!
+            this.setState({ update: true })
+            break
+          }
+          i++
+        }
+      })
+      .catch(console.error)
   }
 
   render () {
@@ -68,7 +95,18 @@ class App extends Component {
           }
         </PageWrapper>
 
-        <Version>version: { packageDetails.version }</Version>
+        <Version>
+          version: { packageDetails.version }
+          {
+            // https://github.com/electron/electron/blob/master/docs/api/shell.md#shellopenexternalurl
+            // docs on opening links in browser
+            this.state.update && <>
+              <p>Update avialable</p>
+              <a href="https://github.com/martin-banks/image-un-embiggener/releases/" target="_blank">Download the update here</a>
+            </>
+          }
+          
+        </Version>
 
       </div>
     )
