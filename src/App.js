@@ -27,6 +27,7 @@ class App extends Component {
       fileData: [],
       log: [],
       showLogs: false,
+      releases: null
     }
 
     ipcRenderer.on('log', (e, content) => {
@@ -46,6 +47,17 @@ class App extends Component {
   }
   toggleLogs () {
     this.setState(prevState => prevState.showLogs = !prevState.showLogs)
+  }
+
+  componentDidMount () {
+    // /repos/:owner/:repo/releases/latest
+    fetch('https://api.github.com/repos/martin-banks/image-un-embiggener/releases/latest')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ releases: data })
+        console.log({ data })
+      })
+      .catch(console.error)
   }
 
   render () {
