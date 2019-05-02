@@ -9,7 +9,7 @@ What are each of the image types good and bad for?
 #### Watch out for
 - Anything with flat red (highly suceptible to compression artifiacts)
 - Flat, vertor graphics. May not compress as effeciently, try a png as well
-- Has no support for transparency
+- Does not support transparency
 
 ---
 
@@ -18,6 +18,7 @@ What are each of the image types good and bad for?
 - mages that require transparent/translucent backgrounds
 
 #### Watch out for
+- 
 
 ---
 
