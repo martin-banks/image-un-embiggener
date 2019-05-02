@@ -26,5 +26,6 @@ What are each of the image types good and bad for?
 - Simple vector illustrations that need to be rendered at large size
 
 #### Watch out for
-- Images are supported
+- Images, just don't use them
+- Text. SVG will render text as text (not as an image of it), so any words be sure to either use a common web-font or outline it.
 
