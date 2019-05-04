@@ -9,9 +9,12 @@ const createDirs = require('../src/processing/create-directories')
 const processWithSharp = require('../src/processing/with-sharp')
 const menuModel = require('../src/electron-components/menu')
 
+const colorPalette = require('../src/processing/color-palette')
+
 const models = {
   slider: require('../src/image-models/slider/index'),
   compress: require('../src/image-models/compress/index'),
+  common: require('../src/image-models/common/index'),
 }
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -171,5 +174,24 @@ ipcMain.on('start', async (e, content) => {
     mainWindow.webContents.send('status', `---ERROR---\n${err}`)
    throw err
  }
+})
+
+
+ipcMain.on('color-palette', async (e, content) => {
+  console.log({ content })
+  const { fileList, folder } = content
+  const palettes = {}
+  try {
+    for (const file of fileList) {
+      console.log({ file })
+      const palette = await colorPalette(path.join(folder, file))
+      palettes[file] = palette
+    }
+  } catch (err) {
+    throw err
+  }
+  console.log('sending logs', palettes)
+  mainWindow.webContents.send('log', palettes)
+  mainWindow.webContents.send('color-palette', palettes)
 })
 

@@ -54,6 +54,20 @@ export default class extends Component {
           <hr />
 
           <PageLink
+            onClick={ this.props.setPage.bind(null, 'compress')}
+            active={ this.props.active === 'compress' }
+            className={ this.props.active === 'compress' ? 'activePage' : '' }
+          >
+            Compressor
+          </PageLink>
+          <PageLink
+            onClick={ this.props.setPage.bind(null, 'common')}
+            active={ this.props.active === 'common' }
+            className={ this.props.active === 'common' ? 'activePage' : '' }
+          >
+            Common sizes
+          </PageLink>
+          <PageLink
             onClick={ this.props.setPage.bind(null, 'slider')}
             active={ this.props.active === 'slider' }
             className={ this.props.active === 'slider' ? 'activePage' : '' }
@@ -61,11 +75,11 @@ export default class extends Component {
             Slider
           </PageLink>
           <PageLink
-            onClick={ this.props.setPage.bind(null, 'compress')}
-            active={ this.props.active === 'compress' }
-            className={ this.props.active === 'compress' ? 'activePage' : '' }
+            onClick={ this.props.setPage.bind(null, 'palette')}
+            active={ this.props.active === 'palette' }
+            className={ this.props.active === 'palette' ? 'activePage' : '' }
           >
-            Compressor
+            Colour palette
           </PageLink>
         </LinkWrapper>
       </Nav>
