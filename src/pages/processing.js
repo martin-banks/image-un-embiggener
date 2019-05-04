@@ -5,7 +5,7 @@ import Markdown from 'react-markdown'
 import Dump from '../components/dump'
 import PageHeader from '../components/page-header'
 
-import readme from '../image-models/slider/README.md'
+// import readme from '../image-models/slider/README.md'
 
 const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
@@ -30,6 +30,7 @@ class Optimiser extends Component {
     }
     this.handleClick_start = this.handleClick_start.bind(this)
     this.toggleReadme = this.toggleReadme.bind(this)
+    this.fileSize = this.fileSize.bind(this)
 
     ipcRenderer.on('new-file', (e, content) => {
       console.log({ content })
@@ -132,14 +133,29 @@ class Optimiser extends Component {
   toggleReadme () {
     this.setState({ showReadme: !this.state.showReadme})
   }
+  fileSize (bytes) {
+    const kb = Math.round(bytes / 1000)
+    if (kb >= 1000) {
+      // first dived 100 and round. divide by 10 again 
+      // gives accurate mb to one decimal places
+      const mb = Math.round(kb / 100) / 10
+      return `${mb}mb`
+    }
+    return `${(kb)}kb`
+  }
 
   async componentDidMount () {
-    fetch(readme)
+    fetch(`https://raw.githubusercontent.com/martin-banks/image-un-embiggener/master/src/image-models/${this.model}/README.md`)
       .then(res => res.text())
       .then(text => {
         this.setState({ readme: text })
       })
-      .catch(console.error)
+      .catch(err => {
+        this.setState({ readme: '⚠️ Error loading readme file ⚠️' })
+        console.error(err)
+      })
+
+
   }
 
   render () {
@@ -200,20 +216,15 @@ class Optimiser extends Component {
                                       ? 'rgba(50, 0, 0, 0.5)'
                                       : 'rgba(0, 50, 0, 0.5)'
                                     }>
-                                      { Math.round(file.versions[v] / 1000) }kb
+                                      {
+                                        this.fileSize(file.versions[v])
+                                        // Math.round(file.versions[v] / 1000)
+                                      }
                                     </FileSize>
                                 </>
                               )
                             }
                           </FileInfo>
-                          {/* {
-                            Object.keys(file.versions).map(v => 
-                              <FileInfo>
-                                <FileName>{ v }</FileName>
-                                <FileSize>{ file.versions[v] }</FileSize>
-                              </FileInfo>
-                            )
-                          } */}
                         </>
                       )
                     )
