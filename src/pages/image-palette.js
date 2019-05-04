@@ -7,6 +7,7 @@ import PageHeader from '../components/page-header'
 
 const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
+const path = window.require('path')
 
 
 export default class extends Component {
@@ -196,11 +197,16 @@ export default class extends Component {
                           <FileInfo key={ `fileinfo-${file.name}` }>
                             <FileName>{ file.name }</FileName>
                             <FileSize>{ Math.round(file.before / 1000) }kb</FileSize>
+                            <PreviewImage src={ path.join(this.state.folder, file.name) } />
                             {
                               (this.state.palette && this.state.palette[file.name]) &&
-                                <VersionFolder>{
-                                 JSON.stringify(this.state.palette[file.name], 'utf8', 2) 
-                                }</VersionFolder>
+                                // <Dump content={this.state.palette[file.name] }/>
+                                Object.keys(this.state.palette[file.name])
+                                  .map(key => <div>
+                                      <Swatch color={ this.state.palette[file.name][key]._rgb }>
+                                        { key }
+                                      </Swatch>
+                                    </div>)
                             }
                           </FileInfo>
                         </>
@@ -262,4 +268,15 @@ const LogButton = styled.button`
   border-radius: 0;
   text-align: left;
   border: none;
+`
+
+const Swatch = styled.div`
+  width: 50px;
+  height: 50px;
+  background: ${p => `rgb(${p.color ? p.color.join() : '0, 0, 0'})`};
+`
+
+
+const PreviewImage = styled.img`
+  max-width: 400px;
 `
