@@ -11,8 +11,8 @@ import Version from './components/version'
 
 import Home from './pages/home'
 import TipsFileTypes from './pages/tips-filetypes'
-import Slider from './pages/slider'
-import Compress from './pages/compress'
+import Processing from './pages/processing'
+import ColorPalette from './pages/image-palette'
 
 const { ipcRenderer } = window.require('electron')
 // const fs = window.require('fs')
@@ -84,9 +84,11 @@ class App extends Component {
 
         <PageWrapper>
           { this.state.page === 'tips' && <TipsFileTypes /> }
-          { this.state.page === 'slider' && <Slider /> }
-          { this.state.page === 'compress' && <Compress /> }
-          { this.state.page === 'home' && <Home /> }
+
+          { this.state.page === 'compress' && <Processing model='compress' /> }
+          { this.state.page === 'common' && <Processing model='common' /> }
+          { this.state.page === 'slider' && <Processing model='slider' /> }
+          { this.state.page === 'palette' && <ColorPalette model='palette' /> }
 
           <LogButton onClick={ this.toggleLogs }>{ this.state.showLogs ? 'Hide' : 'Show' } logs</LogButton>
           {

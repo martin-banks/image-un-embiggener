@@ -48,11 +48,6 @@ class Optimiser extends Component {
           .filter(f => f.match(/.jpe?g|.png|.gif/))
         : []
 
-      // const images = {
-      //   jpg: fileList.filter(f => f.match(/.jpe?g/)),
-      //   png: fileList.filter(f => f.match(/.png/)),
-      //   gif: fileList.filter(f => f.match(/.gif/)),
-      // }
       this.setState({ fileList: [], fileData: [] })
       this.setState({ fileList })
 
@@ -103,7 +98,7 @@ class Optimiser extends Component {
       this.setState({
         status: content,
         showChooseFolderButton: true, // content.toLowerCase() === 'innactive',
-        showProcessingButtons: true, // content.toLowerCase() !== 'innactive' && content.toLowerCase() !== 'processing',
+        showProcessingButtons: content.toLowerCase() !== 'innactive' && content.toLowerCase() !== 'processing',
       })
     })
 
@@ -125,7 +120,7 @@ class Optimiser extends Component {
 
   handleClick_start () {
     ipcRenderer.send('start', {
-      model: 'slider',
+      model: this.props.model,
       folder: this.state.folder,
       fileList: this.state.fileList,
     })
@@ -145,7 +140,7 @@ class Optimiser extends Component {
   }
 
   async componentDidMount () {
-    fetch(`https://raw.githubusercontent.com/martin-banks/image-un-embiggener/master/src/image-models/${this.model}/README.md`)
+    fetch(`https://raw.githubusercontent.com/martin-banks/image-un-embiggener/master/src/image-models/${this.props.model}/README.md`)
       .then(res => res.text())
       .then(text => {
         this.setState({ readme: text })
@@ -165,7 +160,7 @@ class Optimiser extends Component {
           {
             this.state.showReadme
               ? <Markdown source={ this.state.readme } />
-              : <h1>Editorial tools slider</h1>
+              : <h1>{ this.props.model }</h1>
           }
           <LogButton onClick={ this.toggleReadme }>
             { this.state.showReadme ? 'Hide' : 'Show' } details
@@ -185,7 +180,7 @@ class Optimiser extends Component {
             this.state.showProcessingButtons &&
               <button
                 onClick={ this.handleClick_start }
-                model="slider"
+                model={ this.props.model }
               >Start</button>
           }
 
