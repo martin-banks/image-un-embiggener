@@ -68,7 +68,6 @@ const crops = [
   ... template(1920),
   ... template(2048),
 ]
-console.log({ crops })
 
 const report = {
   colors: true,
@@ -76,8 +75,8 @@ const report = {
   ratio: true,
 }
 
-// module.exports = {
-//   info,
-//   crops,
-//   report,
-// }
+module.exports = {
+  info,
+  crops,
+  report,
+}
