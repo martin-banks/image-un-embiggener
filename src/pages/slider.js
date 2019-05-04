@@ -3,14 +3,12 @@ import styled from 'styled-components'
 import Markdown from 'react-markdown'
 
 import Dump from '../components/dump'
-import StrategyButton from '../components/strategy-button'
 import PageHeader from '../components/page-header'
 
 // import readme from '../image-models/slider/README.md'
 
 const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
-const path = window.require('path')
 
 
 class Optimiser extends Component {
@@ -32,6 +30,8 @@ class Optimiser extends Component {
     }
     this.handleClick_start = this.handleClick_start.bind(this)
     this.toggleReadme = this.toggleReadme.bind(this)
+    this.fileSize = this.fileSize.bind(this)
+
 
     ipcRenderer.on('new-file', (e, content) => {
       console.log({ content })
@@ -134,26 +134,28 @@ class Optimiser extends Component {
   toggleReadme () {
     this.setState({ showReadme: !this.state.showReadme})
   }
+  fileSize (bytes) {
+    const kb = Math.round(bytes / 1000)
+    if (kb >= 1000) {
+      // first dived 100 and round. divide by 10 again 
+      // gives accurate mb to one decimal places
+      const mb = Math.round(kb / 100) / 10
+      return `${mb}mb`
+    }
+    return `${(kb)}kb`
+  }
 
   async componentDidMount () {
-    // fetch(readme)
-    //   .then(res => res.text())
-    //   .then(text => {
-    //     this.setState({ readme: text })
-    //   })
-    //   .catch(console.error)
-    try {
-      console.log(__dirname)
-      const homeDir = fs.readdirSync('./', console.error)
-      console.log({ homeDir })
-      const readme = await fs.readFileSync(
-        './src/image-models/slider/README.md',
-        console.error
-      )
-      this.setState({ readme })
-    } catch (err) {
-      throw err
-    }
+    fetch('https://raw.githubusercontent.com/martin-banks/image-un-embiggener/master/src/image-models/slider/README.md')
+      .then(res => res.text())
+      .then(text => {
+        this.setState({ readme: text })
+      })
+      .catch(err => {
+        this.setState({ readme: '⚠️ Error loading readme file ⚠️' })
+        console.error(err)
+      })
+
 
   }
 
@@ -192,7 +194,7 @@ class Optimiser extends Component {
 
           {
             this.state.folder
-              && <>
+              && <div>
                 <p><b>Folder: </b>{ this.state.folder }</p>
                 <FileInfoList>
                   <FileInfo>
@@ -201,23 +203,24 @@ class Optimiser extends Component {
                   </FileInfo>
                   {
                     this.state.fileData
-                      .map(file => (
-                        <>
+                      .map((file, index) => (
+                        <div key={ `original-${index}-${file.name}`}>
                           <FileInfo key={ `fileinfo-${file.name}` }>
                             <FileName>{ file.name }</FileName>
-                            <FileSize>{ Math.round(file.before / 1000) }kb</FileSize>
+                            <FileSize>{ this.fileSize(file.before) }</FileSize>
                               {
-                              Object.keys(file.versions).map(v => 
-                                <>
+                              Object.keys(file.versions).map((v, i) => 
+                                <div key={ `version-${file.name}-${v}` }>
                                   <VersionFolder>|—— { v }</VersionFolder>
                                   <FileSize color={
                                     file.before < file.versions[v]
                                       ? 'rgba(50, 0, 0, 0.5)'
                                       : 'rgba(0, 50, 0, 0.5)'
                                     }>
-                                      { Math.round(file.versions[v] / 1000) }kb
+                                    { this.fileSize(file.versions[v])}
+                                      {/* { Math.round(file.versions[v] / 1000) }kb */}
                                     </FileSize>
-                                </>
+                                </div>
                               )
                             }
                           </FileInfo>
@@ -229,13 +232,13 @@ class Optimiser extends Component {
                               </FileInfo>
                             )
                           } */}
-                        </>
+                        </div>
                       )
                     )
                   }
                 </FileInfoList>
                 <hr />
-              </>
+              </div>
           }
         </div>
     )
