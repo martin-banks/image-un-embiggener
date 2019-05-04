@@ -6,10 +6,11 @@ import Dump from '../components/dump'
 import StrategyButton from '../components/strategy-button'
 import PageHeader from '../components/page-header'
 
-import readme from '../image-models/slider/README.md'
+// import readme from '../image-models/slider/README.md'
 
 const { ipcRenderer } = window.require('electron')
 const fs = window.require('fs')
+const path = window.require('path')
 
 
 class Optimiser extends Component {
@@ -135,12 +136,25 @@ class Optimiser extends Component {
   }
 
   async componentDidMount () {
-    fetch(readme)
-      .then(res => res.text())
-      .then(text => {
-        this.setState({ readme: text })
-      })
-      .catch(console.error)
+    // fetch(readme)
+    //   .then(res => res.text())
+    //   .then(text => {
+    //     this.setState({ readme: text })
+    //   })
+    //   .catch(console.error)
+    try {
+      console.log(__dirname)
+      const homeDir = fs.readdirSync('./', console.error)
+      console.log({ homeDir })
+      const readme = await fs.readFileSync(
+        './src/image-models/slider/README.md',
+        console.error
+      )
+      this.setState({ readme })
+    } catch (err) {
+      throw err
+    }
+
   }
 
   render () {
