@@ -197,17 +197,21 @@ export default class extends Component {
                           <FileInfo key={ `fileinfo-${file.name}` }>
                             <FileName>{ file.name }</FileName>
                             <FileSize>{ Math.round(file.before / 1000) }kb</FileSize>
-                            <PreviewImage src={ path.join(this.state.folder, file.name) } />
-                            {
-                              (this.state.palette && this.state.palette[file.name]) &&
-                                // <Dump content={this.state.palette[file.name] }/>
-                                Object.keys(this.state.palette[file.name])
-                                  .map(key => <div>
-                                      <Swatch color={ this.state.palette[file.name][key]._rgb }>
-                                        { key }
-                                      </Swatch>
-                                    </div>)
-                            }
+                            <PreviewGrid>
+                                <PreviewImage src={ path.join(this.state.folder, file.name) } />
+                                {
+                                  (this.state.palette && this.state.palette[file.name]) &&
+                                    // <Dump content={this.state.palette[file.name] }/>
+                                    <SwatchWrapper>{
+                                      Object.keys(this.state.palette[file.name])
+                                      .map(key => <div>
+                                          <Swatch color={ this.state.palette[file.name][key]._rgb }/>
+                                          <p>{ key }</p>
+                                        </div>)
+                                    }</SwatchWrapper>
+                                }
+
+                            </PreviewGrid>
                           </FileInfo>
                         </>
                       )
@@ -217,8 +221,6 @@ export default class extends Component {
                 <hr />
               </>
           }
-
-          <Dump content={ this.state.palette } />
         </div>
     )
   }
@@ -270,6 +272,12 @@ const LogButton = styled.button`
   border: none;
 `
 
+const SwatchWrapper = styled.div`
+  outline: solid 3px lime;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`
+
 const Swatch = styled.div`
   width: 50px;
   height: 50px;
@@ -278,5 +286,12 @@ const Swatch = styled.div`
 
 
 const PreviewImage = styled.img`
+  display: block;
+  outline: solid 1px red;
   max-width: 400px;
+`
+
+const PreviewGrid = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 `
