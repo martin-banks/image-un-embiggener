@@ -1299,6 +1299,92 @@
     "@types/unist" "*"
     "@types/vfile-message" "*"
 
+"@vibrant/color@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/color/-/color-3.2.0-alpha.tgz#b00ae935a8d799a627370ed4004521b08322f150"
+  integrity sha512-LUJ2u+Oz101yObPh41KFIQbgrvXxoMSaPmVR0SH3zaplTcTYJAyNBXNOQPjG20yHcoQin3dcpJRjkFRf+GEB1Q==
+
+"@vibrant/core@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/core/-/core-3.2.0-alpha.tgz#c7c49d491af880770ecf69bc076e50209e6b7222"
+  integrity sha512-y950/Odw/Ui3uKm2tITs//xcdEXhWj8VvLz/+089jRrGMV6hVYYPChndLXMtF2F54F0bCsYqsMYMeyLhT7LOAA==
+  dependencies:
+    "@vibrant/color" "^3.2.0-alpha"
+    "@vibrant/generator" "^3.2.0-alpha"
+    "@vibrant/image" "^3.2.0-alpha"
+    "@vibrant/quantizer" "^3.2.0-alpha"
+    "@vibrant/types" "^3.2.0-alpha"
+    "@vibrant/worker" "^3.2.0-alpha"
+
+"@vibrant/generator-default@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/generator-default/-/generator-default-3.2.0-alpha.tgz#916dc03db426d14d80eed1d428d6f0dfcb959c82"
+  integrity sha512-qNWYlHH2Q4l1+TwDYl2UVpgWK+98tbZpBFh57IDSP2wONZdLHMhbe1cc6d6tAV7dGWMX0Pm3cB47Xnpu4Sj32A==
+  dependencies:
+    "@vibrant/color" "^3.2.0-alpha"
+    "@vibrant/generator" "^3.2.0-alpha"
+
+"@vibrant/generator@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/generator/-/generator-3.2.0-alpha.tgz#ac6fbcb23cc6f935a907710bd841555123af6a57"
+  integrity sha512-QgQ61vVX4INK1zGCh2vg2kwKBWTi9SZ9jnKRoUZQ4AWqQ5R3r2VHVOHqyWvHUIUOisNxsHg2bnJiTspsCKEhVA==
+  dependencies:
+    "@vibrant/color" "^3.2.0-alpha"
+    "@vibrant/types" "^3.2.0-alpha"
+
+"@vibrant/image-browser@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/image-browser/-/image-browser-3.2.0-alpha.tgz#6d31fe8891ab545c7d1efd9b5e62af50b39f7abc"
+  integrity sha512-wzz3mLHc8EL0wlGtuZ6VYvDsE3dQS4KotQqMJSWJv8uA7+Ozufk9+r1SE1B245G2HLfbNtupm9sGXkXAefYl6w==
+  dependencies:
+    "@vibrant/image" "^3.2.0-alpha"
+
+"@vibrant/image-node@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/image-node/-/image-node-3.2.0-alpha.tgz#c91c9bc1fde8e6a489518377cf852a69243759b1"
+  integrity sha512-tMyUW1WCCWCsJOo7ed7uU2YoLufRkSvyRraSrLSA4SXFsVdCZlAXiTxSkwyaYguIAzq6r4Wv5zYK83ibXsCjLg==
+  dependencies:
+    "@vibrant/image" "^3.2.0-alpha"
+    jimp "^0.6.0"
+
+"@vibrant/image@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/image/-/image-3.2.0-alpha.tgz#a49ce943ec8b7ec2607212b43c7f9367045a7d90"
+  integrity sha512-tmCOrSsNBOx/qgpHtTG4WU1xX9chCsRgDRoKnUTMkT6MbqhOxMqVG8CVHmvBNAJ23QhSl43wZCslBvinPof01A==
+  dependencies:
+    "@vibrant/color" "^3.2.0-alpha"
+    "@vibrant/types" "^3.2.0-alpha"
+
+"@vibrant/quantizer-mmcq@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/quantizer-mmcq/-/quantizer-mmcq-3.2.0-alpha.tgz#aae55bc27e8a869d6057f950e418c7a00131f615"
+  integrity sha512-mw7oSC8BLWpykveI0TDgeDNRpd/8bdNO1Q2rIW1pVPtJBRchUT57VFiuzuucZXJVO+o2jepdnf3c+jSUkJktvA==
+  dependencies:
+    "@vibrant/color" "^3.2.0-alpha"
+    "@vibrant/image" "^3.2.0-alpha"
+    "@vibrant/quantizer" "^3.2.0-alpha"
+
+"@vibrant/quantizer@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/quantizer/-/quantizer-3.2.0-alpha.tgz#894795d01fe6f6646cc127765aa6117742194661"
+  integrity sha512-HkV4fkD4g5ZOkZJ01nYQNeVG60QHVzjdwcoEJq8bfOZ4Hq2etl2Nix3IREGQk1evnej2T/5yB/CHM5RtWcFuSw==
+  dependencies:
+    "@vibrant/color" "^3.2.0-alpha"
+    "@vibrant/image" "^3.2.0-alpha"
+    "@vibrant/types" "^3.2.0-alpha"
+
+"@vibrant/types@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/types/-/types-3.2.0-alpha.tgz#2210fa1df981886266a6c05a3845b41b51a544a0"
+  integrity sha512-ocZXP5JII9UU3p0j/B+q+Q29huOuAxYkQ2sn2tsMl4ID5MzXKhOAhaIwQxMJHQXbVgTL5nUuq71PS2RtBHUZLQ==
+
+"@vibrant/worker@^3.2.0-alpha":
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/@vibrant/worker/-/worker-3.2.0-alpha.tgz#395c3dd2b60ac1c115fafd29ad9bfa414cbaea8a"
+  integrity sha512-4yN85OA8NOfMXkc3IVQ276GOQTlRK07U+aacnDKdZL+AaOVcdR23mht7yGnTF1mWfrj5FWNEvaFQuLQLP1TUXQ==
+  dependencies:
+    "@vibrant/types" "^3.2.0-alpha"
+
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
@@ -8262,6 +8348,19 @@ node-releases@^1.1.3, node-releases@^1.1.8:
   integrity sha512-gQm+K9mGCiT/NXHy+V/ZZS1N/LOaGGqRAAJJs3X9Ah1g+CIbRcBgNyoNYQ+SEtcyAtB9KqDruu+fF7nWjsqRaA==
   dependencies:
     semver "^5.3.0"
+
+node-vibrant@^3.2.0-alpha:
+  version "3.2.0-alpha"
+  resolved "https://registry.yarnpkg.com/node-vibrant/-/node-vibrant-3.2.0-alpha.tgz#203edec713a8de9aad435977b5782ffbded7b72d"
+  integrity sha512-qmt7/RS7rOVf1WvJ5QGp1LCvPdpPxLNq0b4w234/6uZDyOvSSkY6ylqLaQVdFeLDuLrpwia79EdAJyjLLmMCCw==
+  dependencies:
+    "@types/node" "^10.12.18"
+    "@vibrant/core" "^3.2.0-alpha"
+    "@vibrant/generator-default" "^3.2.0-alpha"
+    "@vibrant/image-browser" "^3.2.0-alpha"
+    "@vibrant/image-node" "^3.2.0-alpha"
+    "@vibrant/quantizer-mmcq" "^3.2.0-alpha"
+    url "^0.11.0"
 
 noop-logger@^0.1.1:
   version "0.1.1"

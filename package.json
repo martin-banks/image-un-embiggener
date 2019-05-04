@@ -37,6 +37,7 @@
     "jimp": "^0.6.0",
     "marked": "^0.6.1",
     "mkdirp": "^0.5.1",
+    "node-vibrant": "^3.2.0-alpha",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-markdown": "^4.0.8",
