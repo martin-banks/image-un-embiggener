@@ -5,7 +5,7 @@ const Nav = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  width: 150px;
+  width: 200px;
   height: 100vh;
   background: rgba(0,0,0, 0.2);
   padding-top: 50px;
@@ -18,8 +18,9 @@ const LinkWrapper = styled.ul`
 `
 
 const PageLink = styled.li`
+  position: relative;
   list-style: none;
-  padding: 8px;
+  padding: 2rem;
   background: ${p => p.active ? 'rgba(0,0,0, 0.2)' : 'rgba(0,0,0, 0)'};
 
   cursor: pointer;
@@ -79,6 +80,7 @@ export default class extends Component {
             active={ this.props.active === 'palette' }
             className={ this.props.active === 'palette' ? 'activePage' : '' }
           >
+            <Beta />
             Colour palette
           </PageLink>
         </LinkWrapper>
@@ -87,4 +89,22 @@ export default class extends Component {
   }
 }
 
-
+const Beta = styled.label`
+  position: absolute;
+  top: 0;
+  left: 100%;
+  height: 2rem;
+  background: darkred;
+  color: white;
+  font-weight: 800;
+  padding: 4px 4px 0 4px;
+  margin: 0;
+  overflow: hidden;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  transform: rotate(15deg) translate(-100%, 50%);
+  border-radius: 4px;
+  :before {
+    content: 'BETA';
+  }
+`
