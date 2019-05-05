@@ -20,7 +20,7 @@ function palette (imagePath) {
       .getPalette((err, pal) => {
         console.log({ pal })
         if (err) {
-          console.log('\n--------\nERROR GETTING COLOR PALETTE\n-----------\n', err)
+          console.log('\n-----------\nERROR GETTING COLOR PALETTE\n-----------\n', err)
           return reject(err)
         }
         const colors = makeRGBInt(pal)
