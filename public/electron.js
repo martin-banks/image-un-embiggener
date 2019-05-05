@@ -181,17 +181,22 @@ ipcMain.on('color-palette', async (e, content) => {
   console.log({ content })
   const { fileList, folder } = content
   const palettes = {}
+  const imageList = fileList
+    .filter(file => 
+      file.includes('.jpg')
+      || file.includes('.png')
+    )
   try {
-    for (const file of fileList) {
+    for (const file of imageList) {
       console.log({ file })
       const palette = await colorPalette(path.join(folder, file))
       palettes[file] = palette
+      mainWindow.webContents.send('color-palette', { file, palette})
     }
   } catch (err) {
     throw err
   }
   console.log('sending logs', palettes)
   mainWindow.webContents.send('log', palettes)
-  mainWindow.webContents.send('color-palette', palettes)
 })
 
