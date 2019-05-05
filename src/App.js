@@ -83,6 +83,7 @@ class App extends Component {
         <Nav setPage={ this.handleSetpage } active={ this.state.page } />
 
         <PageWrapper>
+          { this.state.page === 'home' && <Home /> }
           { this.state.page === 'tips' && <TipsFileTypes /> }
 
           { this.state.page === 'compress' && <Processing model='compress' /> }
