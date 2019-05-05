@@ -25,7 +25,7 @@ export default class extends Component {
       showChooseFolderButton: true,
       readme: null,
       showReadme: false,
-      palette: null,
+      palette: {},
     }
     this.handleClick_start = this.handleClick_start.bind(this)
     this.toggleReadme = this.toggleReadme.bind(this)
@@ -44,7 +44,7 @@ export default class extends Component {
           .readdirSync(folderPath)
           .toString()
           .split(',')
-          .filter(f => f.match(/.jpe?g|.png|.gif/))
+          .filter(f => f.match(/\.jpe?g|\.png|\.gif/))
         : []
 
       this.setState({ fileList: [], fileData: [] })
@@ -106,9 +106,17 @@ export default class extends Component {
       this.setState({ log })
     })
 
-    ipcRenderer.on('color-palette', (e, palette) => {
-      console.log('palette recieved', palette)
-      this.setState({ palette })
+    ipcRenderer.on('color-palette', (e, content) => {
+      // this.setState({ palette })
+      this.setState(preState => {
+        return preState.palette[content.file] = content.palette
+      })
+      const fileName = `${content.file.replace(/\./gi, '-')}.json`
+      fs.writeFile(
+        path.join(this.state.folder, fileName),
+        JSON.stringify(content.palette, 'utf8', 2),
+        err => console.log(err || 'done')
+      )
     })
 
   }
@@ -191,28 +199,34 @@ export default class extends Component {
                     <FileListHeader>Filesize</FileListHeader>
                   </FileInfo>
                   {
+                    
                     this.state.fileData
                       .map(file => (
                         <>
                           <FileInfo key={ `fileinfo-${file.name}` }>
                             <FileName>{ file.name }</FileName>
-                            <FileSize>{ Math.round(file.before / 1000) }kb</FileSize>
-                            <PreviewGrid>
-                                <PreviewImage src={ path.join(this.state.folder, file.name) } />
-                                {
-                                  (this.state.palette && this.state.palette[file.name]) &&
-                                    // <Dump content={this.state.palette[file.name] }/>
-                                    <SwatchWrapper>{
-                                      Object.keys(this.state.palette[file.name])
-                                      .map(key => <div>
-                                          <Swatch color={ this.state.palette[file.name][key]._rgb }/>
-                                          <p>{ key }</p>
-                                        </div>)
-                                    }</SwatchWrapper>
-                                }
-
-                            </PreviewGrid>
+                            <FileSize>{ this.fileSize(file.before) }</FileSize>
                           </FileInfo>
+                          <PreviewGrid>
+                              <PreviewImage src={ path.join(this.state.folder, file.name) } />
+                              {
+                                (this.state.palette && this.state.palette[file.name]) &&
+                                  <SwatchWrapper>{
+                                    Object.keys(this.state.palette[file.name])
+                                      .map(key =>
+                                        <Swatch color={ this.state.palette[file.name][key]._rgb }>
+                                          <p>{ key }</p>
+                                          <p>
+                                            <span>r: { this.state.palette[file.name][key]._rgb[0] }</span>
+                                            <span>g: { this.state.palette[file.name][key]._rgb[1] }</span>
+                                            <span>b: { this.state.palette[file.name][key]._rgb[2] }</span>
+                                          </p>
+                                        </Swatch>
+                                      )
+                                  }</SwatchWrapper>
+                              }
+
+                          </PreviewGrid>
                         </>
                       )
                     )
@@ -241,9 +255,8 @@ const FileListHeader = styled.span`
 `
 const FileInfo = styled.li`
   display: grid;
-  grid-template-columns: auto 100px;
+  grid-template-columns: 1fr 100px;
   margin: 0;
-  margin-bottom: 4px;
   list-style: none;
 `
 const FileInfoPart = styled.span`
@@ -272,26 +285,38 @@ const LogButton = styled.button`
   border: none;
 `
 
-const SwatchWrapper = styled.div`
-  outline: solid 3px lime;
+const SwatchWrapper = styled.pre`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  padding: 2px;
+  margin: 0;
+  color: white;
 `
 
 const Swatch = styled.div`
-  width: 50px;
-  height: 50px;
+  padding-top: 50px;
   background: ${p => `rgb(${p.color ? p.color.join() : '0, 0, 0'})`};
+  margin: 4px;
+  p {
+    margin: 0;
+    background: rgba(0,0,0, 0.3);
+    padding: 0 4px
+  }
+  span {
+    display: block;
+  }
 `
 
 
 const PreviewImage = styled.img`
   display: block;
-  outline: solid 1px red;
+  /* outline: solid 1px red; */
   max-width: 400px;
 `
 
 const PreviewGrid = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
+  background: rgba(0,0,0, 0.6);
+  margin-bottom: 4px;
 `
