@@ -43,7 +43,7 @@ export default class extends Component {
             active={ this.props.active === 'home' }
             className={ this.props.active === 'home' ? 'activePage' : '' }
           >
-            Home
+            How to
           </PageLink>
           {/* <PageLink
             onClick={ this.props.setPage.bind(null, 'tips')}
@@ -92,17 +92,17 @@ export default class extends Component {
 const Beta = styled.label`
   position: absolute;
   top: 0;
-  left: 100%;
-  height: 2rem;
+  left: 2rem;
+  height: 1.5rem;
   background: darkred;
   color: white;
   font-weight: 800;
-  padding: 4px 4px 0 4px;
+  padding: 1.5px 4px 0 4px;
   margin: 0;
   overflow: hidden;
   font-size: 1.5rem;
   line-height: 1.5rem;
-  transform: rotate(15deg) translate(-100%, 50%);
+  /* transform: rotate(-15deg) translate(-100%, 50%); */
   border-radius: 4px;
   :before {
     content: 'BETA';
