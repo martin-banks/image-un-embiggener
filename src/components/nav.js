@@ -76,9 +76,9 @@ export default class extends Component {
             Slider
           </PageLink>
           <PageLink
-            onClick={ this.props.setPage.bind(null, 'palette')}
-            active={ this.props.active === 'palette' }
-            className={ this.props.active === 'palette' ? 'activePage' : '' }
+            onClick={ this.props.setPage.bind(null, 'color-palette')}
+            active={ this.props.active === 'color-palette' }
+            className={ this.props.active === 'color-palette' ? 'activePage' : '' }
           >
             <Beta />
             Colour palette

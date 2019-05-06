@@ -90,7 +90,7 @@ class App extends Component {
           { this.state.page === 'compress' && <Processing model='compress' /> }
           { this.state.page === 'common' && <Processing model='common' /> }
           { this.state.page === 'slider' && <Processing model='slider' /> }
-          { this.state.page === 'palette' && <ColorPalette model='palette' /> }
+          { this.state.page === 'color-palette' && <ColorPalette model='color-palette' /> }
 
           <LogButton onClick={ this.toggleLogs }>{ this.state.showLogs ? 'Hide' : 'Show' } logs</LogButton>
           {
