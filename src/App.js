@@ -25,7 +25,7 @@ class App extends Component {
     super()
 
     this.state = {
-      page: 'home',
+      page: 'compress',
       fileData: [],
       log: [],
       showLogs: false,
@@ -83,7 +83,6 @@ class App extends Component {
         <Background />
         <Draggable />
         <Nav setPage={ this.handleSetpage } active={ this.state.page } />
-        <Spinner />
         <PageWrapper>
           { this.state.page === 'home' && <Home /> }
           { this.state.page === 'tips' && <TipsFileTypes /> }
