@@ -10,9 +10,6 @@ const fs = require('fs')
 const Promise = require('bluebird')
 
 // imagemin = path.join(imagemin, '')
-
-
-
 // const model = require('../image-models/carousel')
 
 
