@@ -14,6 +14,8 @@ import TipsFileTypes from './pages/tips-filetypes'
 import Processing from './pages/processing'
 import ColorPalette from './pages/image-palette'
 
+import Spinner from './components/spinner'
+
 const { ipcRenderer } = window.require('electron')
 // const fs = window.require('fs')
 
@@ -81,7 +83,7 @@ class App extends Component {
         <Background />
         <Draggable />
         <Nav setPage={ this.handleSetpage } active={ this.state.page } />
-
+        <Spinner />
         <PageWrapper>
           { this.state.page === 'home' && <Home /> }
           { this.state.page === 'tips' && <TipsFileTypes /> }
