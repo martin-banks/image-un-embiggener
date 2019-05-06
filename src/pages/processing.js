@@ -4,6 +4,7 @@ import Markdown from 'react-markdown'
 
 import Dump from '../components/dump'
 import PageHeader from '../components/page-header'
+import Spinner from '../components/spinner'
 
 // import readme from '../image-models/slider/README.md'
 
@@ -27,6 +28,7 @@ class Optimiser extends Component {
       showChooseFolderButton: true,
       readme: null,
       showReadme: false,
+      showSpinner: false
     }
     this.handleClick_start = this.handleClick_start.bind(this)
     this.toggleReadme = this.toggleReadme.bind(this)
@@ -45,7 +47,7 @@ class Optimiser extends Component {
           .readdirSync(folderPath)
           .toString()
           .split(',')
-          .filter(f => f.match(/.jpe?g|.png|.gif/))
+          .filter(f => f.match(/\.jpe?g|\.png|\.gif/))
         : []
 
       this.setState({ fileList: [], fileData: [] })
@@ -98,7 +100,8 @@ class Optimiser extends Component {
       this.setState({
         status: content,
         showChooseFolderButton: true, // content.toLowerCase() === 'innactive',
-        showProcessingButtons: content.toLowerCase() !== 'innactive' && content.toLowerCase() !== 'processing',
+        showProcessingButtons: content.toLowerCase() !== 'innactive' && !content.toLowerCase().includes('processing'),
+        showSpinner: content.toLowerCase().includes('processing')
       })
     })
 
@@ -184,6 +187,12 @@ class Optimiser extends Component {
               >Start</button>
           }
 
+          { (this.state.showSpinner) &&
+            <Centered>
+              <Spinner />
+            </Centered>
+          }
+
           <hr />
 
           {
@@ -201,7 +210,7 @@ class Optimiser extends Component {
                         <>
                           <FileInfo key={ `fileinfo-${file.name}` }>
                             <FileName>{ file.name }</FileName>
-                            <FileSize>{ Math.round(file.before / 1000) }kb</FileSize>
+                            <FileSize>{ this.fileSize(file.before) }</FileSize>
                               {
                               Object.keys(file.versions).map(v => 
                                 <>
@@ -279,4 +288,8 @@ const LogButton = styled.button`
   border-radius: 0;
   text-align: left;
   border: none;
+`
+
+const Centered = styled.div`
+  display: grid;
 `
