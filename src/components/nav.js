@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+const commonWidths = require('../image-models/common/index').imageWidths
+
+
 const Nav = styled.nav`
   position: fixed;
   top: 0;
@@ -32,6 +35,15 @@ const PageLink = styled.li`
 export default class extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      showCommonWidths: false,
+    }
+
+    this.toggleCommonWidths = this.toggleCommonWidths.bind(this)
+  }
+
+  toggleCommonWidths () {
+    this.setState({ showCommonWidths: !this.state.showCommonWidths })
   }
 
   render () {
@@ -55,19 +67,41 @@ export default class extends Component {
           <hr />
 
           <PageLink
-            onClick={ this.props.setPage.bind(null, 'compress')}
+            onClick={ this.props.setPage.bind(null, 'compress') }
             active={ this.props.active === 'compress' }
             className={ this.props.active === 'compress' ? 'activePage' : '' }
           >
             Compressor
           </PageLink>
+
           <PageLink
-            onClick={ this.props.setPage.bind(null, 'common')}
+            onClick={ this.props.setPage.bind(null, 'common') }
             active={ this.props.active === 'common' }
             className={ this.props.active === 'common' ? 'activePage' : '' }
           >
-            Common sizes
+            Common widths
           </PageLink>
+
+          {/* <PageLink
+            onClick={ this.toggleCommonWidths }
+            active={ this.state.showCommonWidths }
+            className={ this.state.showCommonWidths ? 'activePage' : '' }
+          >
+            Common widths
+          </PageLink>
+
+          {
+            this.state.showCommonWidths && commonWidths.map(w => <PageLink
+                key={ `link-common-width-${w}` }
+                onClick={ this.props.setPage.bind(null, `common-${w}`)}
+                active={ this.props.active === `common-${w}` }
+                className={ this.props.active === 'common' ? 'activePage' : '' }
+              >
+                { w }px wide
+              </PageLink>
+            )
+          } */}
+
           <PageLink
             onClick={ this.props.setPage.bind(null, 'slider')}
             active={ this.props.active === 'slider' }

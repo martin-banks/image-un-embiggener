@@ -59,15 +59,21 @@ const template = width => [
   },
 ]
 
-const crops = [
-  ... template(768),
-  ... template(960),
-  ... template(1024),
-  ... template(1280),
-  ... template(1440),
-  ... template(1920),
-  ... template(2048),
+const imageWidths = [
+  768,
+  960,
+  1024,
+  1280,
+  1440,
+  1920,
+  2048,
 ]
+
+const crops = imageWidths.reduce((output, w) => {
+  const update = output
+  template(w).forEach(x => update.push(x))
+  return update
+}, [])
 
 const report = {
   colors: true,
@@ -79,4 +85,5 @@ module.exports = {
   info,
   crops,
   report,
+  imageWidths,
 }
