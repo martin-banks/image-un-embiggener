@@ -75,10 +75,19 @@ export default class extends Component {
           </PageLink>
 
           <PageLink
+            onClick={ this.props.setPage.bind(null, 'slider')}
+            active={ this.props.active === 'slider' }
+            className={ this.props.active === 'slider' ? 'activePage' : '' }
+          >
+            Slider
+          </PageLink>
+
+          <PageLink
             onClick={ this.props.setPage.bind(null, 'common') }
             active={ this.props.active === 'common' }
             className={ this.props.active === 'common' ? 'activePage' : '' }
           >
+            <Beta />
             Common widths
           </PageLink>
 
@@ -102,13 +111,6 @@ export default class extends Component {
             )
           } */}
 
-          <PageLink
-            onClick={ this.props.setPage.bind(null, 'slider')}
-            active={ this.props.active === 'slider' }
-            className={ this.props.active === 'slider' ? 'activePage' : '' }
-          >
-            Slider
-          </PageLink>
           <PageLink
             onClick={ this.props.setPage.bind(null, 'color-palette')}
             active={ this.props.active === 'color-palette' }
