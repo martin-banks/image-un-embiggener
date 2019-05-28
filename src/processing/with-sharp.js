@@ -44,12 +44,12 @@ async function processPng ({ file, filePath, model, mainWindow }) {
         .resize(model.width)
         // .png()
         .png({
-          compressionLevel: 9,
-          quality: 10,
-          colors: 64,
-          // quality: model.quality.png,
-          // compressionLevel: model.compression.png,
-          // colors: model.colors.png,
+          // compressionLevel: 9,
+          // quality: 10,
+          // colors: 64,
+          quality: model.png.quality,
+          compressionLevel: model.png.compression,
+          colors: model.png.colors,
           // dither: model.dither,
         })
         .toFile(

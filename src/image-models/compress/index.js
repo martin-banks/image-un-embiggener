@@ -7,7 +7,7 @@ const crops = [
     context: 'optimised',
     files: {
       jpg: true,
-      png: false,
+      png: true,
     },
     width: null,
     suffix: '-60',
@@ -17,12 +17,17 @@ const crops = [
     quality: {
       jpg: 60,
     },
+    png: {
+      quality: 0,
+      compressions: 0,
+      colors: 256,
+    },
   },
   {
     context: 'optimised',
     files: {
       jpg: true,
-      png: false,
+      png: true,
     },
     width: null,
     suffix: '-40',
@@ -32,12 +37,17 @@ const crops = [
     quality: {
       jpg: 40,
     },
+    png: {
+      quality: 100,
+      compressions: 9,
+      colors: 128,
+    },
   },
   {
     context: 'optimised',
     files: {
       jpg: true,
-      png: false,
+      png: true,
     },
     width: null,
     suffix: '-30',
@@ -47,12 +57,17 @@ const crops = [
     quality: {
       jpg: 30,
     },
+    png: {
+      quality: 100,
+      compressions: 0,
+      colors: 128,
+    },
   },
   {
     context: 'optimised',
     files: {
       jpg: true,
-      png: false,
+      png: true,
     },
     width: null,
     suffix: '-20',
@@ -62,12 +77,17 @@ const crops = [
     quality: {
       jpg: 20,
     },
+    png: {
+      quality: 0,
+      compressions: 0,
+      colors: 64,
+    },
   },
   {
     context: 'optimised',
     files: {
       jpg: true,
-      png: false,
+      png: true,
     },
     width: null,
     suffix: '-10',
@@ -76,6 +96,11 @@ const crops = [
     sharpen: 0,
     quality: {
       jpg: 10,
+    },
+    png: {
+      quality: 0,
+      compressions: 9,
+      colors: 2,
     },
   },
   
